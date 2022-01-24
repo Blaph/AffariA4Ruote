@@ -29,8 +29,7 @@ public class UI {
             System.out.println("..::~~~ BENVENUTO SU 'AFFARI A 4 RUOTE' ~~~::..");
             System.out.println("1. Acquista un veicolo");
             System.out.println("2. Noleggia veicolo");
-            System.out.println("3. Autènticati");
-            System.out.println("4. Carica un nuovo veicolo (devi prima autenticarti)");
+            System.out.println("3. Carica nuovo mezzo (devi prima autenticarti)");
             System.out.println("-----------------------------------------------");
             System.out.println("Per favore, scegli l'attività da eseguire: inserisci un numero.");
 
@@ -40,6 +39,14 @@ public class UI {
                 case 1:
                     system.opzione1();  // UC5 e UC11
                     break;
+                case 2:
+                    system.opzione2();  // UC8
+                    break;
+                case 3:
+                    system.opzione4();  // UC3
+                    break;
+                default:
+                System.out.println("Opzione non valida.");
             }
         }
     }

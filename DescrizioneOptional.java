@@ -10,14 +10,14 @@ package A4R;
  */
 public class DescrizioneOptional {
 
-    public DescrizioneOptional(String nome, float prezzo, String colore){
+    public DescrizioneOptional(String nome, int prezzo, String colore){
         this.nome = nome;
         this.prezzo = prezzo;
         this.colore = colore;
     }
 
     private String nome;
-    private float prezzo;
+    private int prezzo;
     private String colore;
 
 
@@ -30,11 +30,11 @@ public class DescrizioneOptional {
         this.nome = nome;
     }
 
-    public float getPrezzo() {
+    public int getPrezzo() {
         return prezzo;
     }
 
-    public void setPrezzo(float prezzo) {
+    public void setPrezzo(int prezzo) {
         this.prezzo = prezzo;
     }
 

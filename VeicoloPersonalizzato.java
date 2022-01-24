@@ -23,7 +23,7 @@ public class VeicoloPersonalizzato extends Veicolo {
     private ArrayList<Optional> listaOptional;
     private Concessionario C;
     private DescrizioneOptional descrizioneOptional;
-    protected float prezzoOptional = 0;
+    protected int prezzoOptional = 0;
 
     public void aggiungiOptional(String nomeOptional) {
         descrizioneOptional = mappaDO.get(nomeOptional);
@@ -125,11 +125,11 @@ public class VeicoloPersonalizzato extends Veicolo {
         this.concessionario = concessionario;
     }
 
-    public float getPrezzoOptional() {
+    public int getPrezzoOptional() {
         return prezzoOptional;
     }
 
-    public void setPrezzoOptional(float prezzoOptional) {
+    public void setPrezzoOptional(int prezzoOptional) {
         this.prezzoOptional = prezzoOptional;
     }
 

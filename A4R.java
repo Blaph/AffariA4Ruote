@@ -5,6 +5,7 @@
 package A4R;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -167,10 +168,11 @@ public class A4R {
         return VPcorrente;
     }
 
-    public void scegliVeicoloNoleggio(int codice) {
+    public VeicoloNoleggiabile scegliVeicoloNoleggio(int codice) {
         veicoloNoleggiabile = P.getMappaVeicoliNoleggiabili().get(codice);
         luogoRitiro = veicoloNoleggiabile.recuperaLuogo();
         ricevutaNoleggio = new Noleggio(utente, veicoloNoleggiabile, luogoRitiro);
+        return veicoloNoleggiabile;
     }
 
     public void aggiungiOptional(String nomeOptional) {
@@ -201,7 +203,7 @@ public class A4R {
 
     public void scegliPagamento(int codicePagamento) {
         metodoPagamentoAdapter = mappaMetodoPagamento.get(codicePagamento);
-        prezzoFinale = ordineCorrente.impostaOrdine(metodoPagamentoAdapter);
+        setPrezzoFinale(ordineCorrente.impostaOrdine(metodoPagamentoAdapter));
     }
 
     public void effettuaPagamentoAcquisto(float prezzoTotale) {
@@ -277,23 +279,122 @@ public class A4R {
         VPcorrente = scegliVeicoloAcquisto(codiceV);
         System.out.println("Ecco la lista di optional disponibili per il veicolo scelto: ");
         mostraDescrizioniOptional(VPcorrente);
-        System.out.println("Per favore, scegli l'optional da aggiungere inserendo il rispettivo nome ('esci' per uscire): ");
+        System.out.println("Per favore, scegli l'optional da aggiungere inserendo il rispettivo nome ('esci' per tornare al menù principale): ");
         risposta = input.nextLine();
         if (risposta.equals("esci")) {
-            (risposta.equals("esci"))
+            System.out.println("Ritorno al menu' in corso...");
+            return;
         }
-            aggiungiOptional(risposta);
+        aggiungiOptional(risposta);
         terminaPersonalizzazione(VPcorrente);
         System.out.println("Scegli il luogo di ritiro (attualmente disponibili solo 'Catania', 'London' e 'Sapporo'):");
         risposta = input.nextLine();
         scegliLuogoRitiro(risposta);
         System.out.println("Scegli un metodo di pagamento digitando il codice corrispondente. '0' per tornare al menù principale.");
         codiceV = input.nextInt();
-        if(codiceV == 0)
+        if (codiceV == 0) {
+            System.out.println("Ritorno al menu' in corso...");
             return;
+        }
         scegliPagamento(codiceV);
+        System.out.println("Per confermare il pagamento digita 'ok'. 'esci' per ritornare al menu' principale ed annullare l'acquisto.");
+        risposta = input.nextLine();
+        if (risposta.equals("esci")) {
+            System.out.println("Ritorno al menu' in corso...");
+            return;
+        }
+        effettuaPagamentoAcquisto(prezzoFinale);
+        System.out.println("GRAZIE PER AVER ACQUISTATO CON NOI!");
+        System.out.println("---- Riepilogo dell'acquisto ----");
+        System.out.println(ricevutaAcquisto);
+        System.out.println("Email inviata.");
+        risposta = input.next();
+        System.out.println("Ritorno al menu' in corso...");
     }
 
+    // L'utente ha scelto di visualizzare i veicoli in vendita
+    public void opzione2() {
+        int codiceV = 0;
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+        mostraNoleggia();
+        System.out.println("Desideri filtrare la lista? (s/n)");
+        String risposta = input.nextLine();
+        if (risposta.equals("s") || risposta.equals("S")) {
+            System.out.println("Inserisci il produttore: ");
+            String produttore = input.nextLine();
+            System.out.println("Inserisci il modello dell'auto");
+            String modello = input.nextLine();
+            System.out.println("Inserisci il tipo del veicolo (Autoveicolo/Motoveicolo)");
+            String tipoVeicolo = input.nextLine();
+            filtraVeicoliNoleggio(produttore, modello, tipoVeicolo);
+        }
+        System.out.println("Inserici il codice corrispondente al veicolo che hai scelto (0 per tornare indietro)");
+        codiceV = input.nextInt();
+        if (codiceV == 0) {
+            System.err.println("Ritorno al menu' in corso...");
+            return;
+        }
+        veicoloNoleggiabile = scegliVeicoloNoleggio(codiceV);
+        System.out.println("Per quale data vuoi noleggiare il veicolo?");
+        System.out.println("INIZIO periodo di noleggio nel formato dd-mm-yyyy:");
+        String inizio = input.nextLine();
+        System.out.println("FINE periodo di noleggio nel formato dd-mm-yyyy:");
+        String fine = input.nextLine();
+        try {
+            periodoNoleggio(LocalDate.parse(inizio, formato), LocalDate.parse(fine, formato));
+        }
+        catch (IllegalArgumentException e) {
+            System.out.println("Inserire il data in un formato valido: " + e);
+            System.out.println("Ritorno al menu' in corso...");
+            return;
+        }
+        System.out.println("Scegli un metodo di pagamento digitando il codice corrispondente. '0' per tornare al menù principale.");
+        codiceV = input.nextInt();
+        if (codiceV == 0) {
+            System.out.println("Ritorno al menu' in corso...");
+            return;
+        }
+        scegliPagamento(codiceV);
+        System.out.println("Per confermare il pagamento digita 'ok'. 'esci' per ritornare al menu' principale ed annullare l'acquisto.");
+        risposta = input.nextLine();
+        if (risposta.equals("esci")) {
+            System.out.println("Ritorno al menu' in corso...");
+            return;
+        }
+        effettuaPagamentoNoleggio(prezzoFinale);
+        System.out.println("GRAZIE PER AVER NOLEGGIATO CON NOI!");
+        System.out.println("---- Riepilogo del noleggio ----");
+        System.out.println(ricevutaNoleggio);
+        System.out.println("Email inviata.");
+        risposta = input.next();
+        System.out.println("Ritorno al menu' in corso...");
+    }
+
+    public void opzione3(){
+        System.out.println("TODO: fix later");
+    }
+
+    public void opzione4(){
+        System.out.println("Inserisci il prezzo base del veicolo:");
+        int prezzoBase = input.nextInt();
+        System.out.println("Inserisci il produttore del veicolo:");
+        String produttore = input.nextLine();
+        System.out.println("Inserisci il modello del veicolo:");
+        String modello = input.nextLine();
+        System.out.println("Inserisci la cilindrata del veicolo:");
+        int cilindrata = input.nextInt();
+        System.out.println("Inserisci il tipo del veicolo: (autoveicolo, motoveicolo)");
+        String tipoVeicolo = input.nextLine();
+        caricaMezzo(prezzoBase, produttore, modello, cilindrata, tipoVeicolo);
+        System.out.println("Inserisci le foto del veicolo (max 4)");
+        for(int i = 0; i < 4; i++) {
+            System.out.println("Foto" + i);
+            caricaFoto(F);
+        }
+        terminaCaricamento();
+        System.out.println("Veicolo caricato con successo!");
+    }
 
     // Getter/Setter
     public Parco getP() {
