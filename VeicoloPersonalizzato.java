@@ -14,8 +14,10 @@ import java.util.ArrayList;
 
 public class VeicoloPersonalizzato extends Veicolo {
 
-    public VeicoloPersonalizzato(int codice, Concessionario concessionario, int prezzoBase, String produttore, String modello, int cilindrata, String tipoVeicolo) {
+    public VeicoloPersonalizzato(int codice, Concessionario concessionario, int prezzoBase, String produttore, String modello, int cilindrata, String tipoVeicolo, HashMap<String, DescrizioneOptional> mappaDO, ArrayList<Foto> listaFoto) {
         super(codice, concessionario, prezzoBase, produttore, modello, cilindrata, tipoVeicolo);
+         this.mappaDO =  mappaDO;
+         this.listaFoto = listaFoto;
         listaOptional = new ArrayList<Optional>();
     }
 
@@ -36,7 +38,7 @@ public class VeicoloPersonalizzato extends Veicolo {
     // Stampa elenco degli optional
     public void mostraDescrizioniOptional() {
         for (String nome : mappaDO.keySet()) {
-            System.out.println("Codice: " + nome + ", Optional: " + mappaDO.get(codice));
+            System.out.println("Codice: " + nome + ", Optional: " + mappaDO.get(codice).getNome());
         }
     }
 

@@ -22,7 +22,10 @@ public class Parco {
 
     private static Parco instance;
 
-    private void Parco() {
+    private Parco() {
+        mappaVeicoli = new  HashMap<>();
+        mappaVeicoliPersonalizzati = new HashMap<>();
+        mappaVeicoliNoleggiabili = new HashMap<>();
     }
 
     public static Parco getInstance() {
@@ -34,8 +37,9 @@ public class Parco {
     }
 
     public void mostraAcquista() {
-        for (int codice : mappaVeicoliPersonalizzati.keySet()) {
-            System.out.println(mappaVeicoliPersonalizzati.get(codice));
+        for (int codice : mappaVeicoli.keySet()) {
+            System.out.println("Codice: " + mappaVeicoli.get(codice).getCodice() + "   Produttore: " + mappaVeicoli.get(codice).getProduttore() + "   Modello: " + mappaVeicoli.get(codice).modello + "   Tipologia: " + mappaVeicoli.get(codice).getTipoVeicolo());
+            System.out.println("___________________________________________________________________________________________________________________\n");
         }
     }
 
@@ -44,15 +48,17 @@ public class Parco {
             noleggio = mappaVeicoliNoleggiabili.get(codice).getNoleggio();
             //Stampa solo i veicoli che non sono ancora stati noleggiati
             if (noleggio == null) {
-                System.out.println(mappaVeicoliNoleggiabili.get(codice));
+                System.out.println(mappaVeicoliNoleggiabili.get(codice).getCodice( ) + "   Produttore: " + mappaVeicoliNoleggiabili.get(codice).getProduttore() + "   Modello: " +mappaVeicoliNoleggiabili.get(codice).modello + "   Tipologia: " + mappaVeicoliNoleggiabili.get(codice).getTipoVeicolo());
+                System.out.println("___________________________________________________________________________________________________________________\n");
             }
         }
     }
 
     public void filtraVeicoliAcquisto(String produttore, String modello, String tipoVeicolo) {
-        for (int codice : mappaVeicoliPersonalizzati.keySet()) {
-            if ((mappaVeicoliPersonalizzati.get(codice).getProduttore()).equals(produttore) && (mappaVeicoliPersonalizzati.get(codice).getModello()).equals(modello) && (mappaVeicoliPersonalizzati.get(codice).getTipoVeicolo()).equals(tipoVeicolo)) {
-                System.out.println(mappaVeicoliPersonalizzati.get(codice));
+        for (int codice : mappaVeicoli.keySet()) {
+            if ((mappaVeicoli.get(codice).getProduttore()).equals(produttore) && (mappaVeicoli.get(codice).getModello()).equals(modello) && (mappaVeicoli.get(codice).getTipoVeicolo()).equals(tipoVeicolo)) {
+                 System.out.println("Codice: " + mappaVeicoli.get(codice).getCodice() + "   Produttore: " + mappaVeicoli.get(codice).getProduttore() + "   Modello: " + mappaVeicoli.get(codice).modello + "   Tipologia: " + mappaVeicoli.get(codice).getTipoVeicolo());
+                 System.out.println("___________________________________________________________________________________________________________________\n");
             }
         }
     }
@@ -60,9 +66,10 @@ public class Parco {
     public void filtraVeicoliNoleggio(String produttore, String modello, String tipoVeicolo) {
         for (int codice : mappaVeicoliNoleggiabili.keySet()) {
             //Se il veicolo non è stato noleggiato, esegui
-            if (mappaVeicoliNoleggiabili.get(codice).getNoleggio().equals(null)) {
+            if (mappaVeicoliNoleggiabili.get(codice).getInNoleggio() == false) {
                 if ((mappaVeicoliNoleggiabili.get(codice).getProduttore()).equals(produttore) && (mappaVeicoliNoleggiabili.get(codice).getModello()).equals(modello) && (mappaVeicoliNoleggiabili.get(codice).getTipoVeicolo()).equals(tipoVeicolo)) {
-                    System.out.println(mappaVeicoliPersonalizzati.get(codice));
+                    System.out.println("Codice: " + mappaVeicoliNoleggiabili.get(codice).getCodice() + "   Produttore: " + mappaVeicoliNoleggiabili.get(codice).getProduttore() + "   Modello: " + mappaVeicoliNoleggiabili.get(codice).modello + "   Tipologia: " + mappaVeicoliNoleggiabili.get(codice).getTipoVeicolo());
+                 System.out.println("___________________________________________________________________________________________________________________\n");
                 }
             }
         }

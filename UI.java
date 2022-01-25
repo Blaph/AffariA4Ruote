@@ -16,8 +16,9 @@ public class UI {
         Scanner input = new Scanner(System.in);
 
         A4R system = A4R.getInstance();
+        Parco P = Parco.getInstance();
 
-        system.startup();
+        system.startup(P);
 
         //Il menù viene stampato ogni volta che si torna indietro
         while(true){

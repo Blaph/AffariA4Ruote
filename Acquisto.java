@@ -83,12 +83,52 @@ public class Acquisto extends Ordine {
         }
     }
 
-    public float calcoloTotaleAcquisto(int prezzoBase, int IVA, float tasseDogane, int commissioneA4R, float commissionePagamento, float costoSpedizione, int scontoPremium, int scontoA4R, int scontoconcessionario, int prezzoOptional) {
+    public float calcoloTotaleAcquisto(int prezzoBase, int IVA, float tasseDogane, int commissioneA4R, float commissionePagamento, float costoSpedizione, int scontoPremium, int scontoA4R, int scontoConcessionario, int prezzoOptional) {
         return (prezzoBase + ((prezzoBase * IVA) / 100) + tasseDogane + commissioneA4R + commissionePagamento + costoSpedizione - ((prezzoBase * scontoPremium) / 100) - ((prezzoBase * scontoA4R) / 100) - ((prezzoBase * scontoConcessionario) / 100));
     }
 
     public void aggiornaAcquisto(LocalDate dataAcquisto) {
         this.dataAcquisto = dataAcquisto;
     }
+    
+    public float getTasseDogane(){
+        return this.tasseDogane;
+    }
+    
+    public int getCommissioneA4R(){
+        return commissioneA4R;
+    }
+    
+    public int getPrezzoBase(){
+    return prezzoBase;
+    }
 
+    public int getIva(){
+    return IVA;
+    }
+    
+    public float getCommissionePagamento(){
+    return commissionePagamento;
+    }
+
+    public float getCostoSpedizione(){
+        return costoSpedizione;
+    }
+    
+    public int getScontoPremium(){
+        return scontoPremium;
+    }
+    
+        public int getScontoA4R(){
+        return scontoA4R;
+    }
+
+    public int getScontoConcessionario(){
+        return scontoConcessionario;
+    }
+    
+    public int getPrezzoOptional(){
+        return prezzoOptional;
+    }
+    
 }

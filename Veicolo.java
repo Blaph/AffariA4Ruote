@@ -22,7 +22,10 @@ public class Veicolo {
         this.modello = modello;
         this.cilindrata = cilindrata;
         this.tipoVeicolo = tipoVeicolo;
-        this.listaFoto = new ArrayList<Foto>();
+        this.listaFoto = new ArrayList<>();
+        mappaVeicoliPersonalizzati = new HashMap<>();
+        mappaDO = new HashMap<>(); 
+        
     }
 
     protected int codice;
@@ -39,12 +42,13 @@ public class Veicolo {
     private VeicoloPersonalizzato VP;
 
     public VeicoloPersonalizzato creaVeicoloPersonalizzato() {
-        return new VeicoloPersonalizzato(codice, concessionario, prezzoBase, produttore, modello, cilindrata, tipoVeicolo);
+        return new VeicoloPersonalizzato(codice, concessionario, prezzoBase, produttore, modello, cilindrata, tipoVeicolo, mappaDO, listaFoto);
     }
 
     public void aggiungiFoto(Foto foto) {
         listaFoto.add(foto);
     }
+
 
 
     // Getter/Setter
@@ -142,5 +146,11 @@ public class Veicolo {
 
     public void setConcessionario(Concessionario concessionario) {
         this.concessionario = concessionario;
+    }
+    
+    public void mostraDescrizioniOptional() {
+        for (String nome : mappaDO.keySet()) {
+            System.out.println("Codice: " + nome + ", Optional: " + mappaDO.get(codice).getNome());
+        }
     }
 }

@@ -37,6 +37,7 @@ public class A4R {
     private int durataNoleggio;
     private String luogoRitiro;
     private int counterFoto = 1;
+    private Veicolo V;
 
     private Scanner input;
 
@@ -53,7 +54,8 @@ public class A4R {
         return instance;
     }
 
-    public void startup() {
+    public void startup(Parco P) {
+        this.P = P;
         input = new Scanner(System.in);
 
         // Utenti
@@ -68,58 +70,153 @@ public class A4R {
 
         // Veicoli
         Veicolo panda = new Veicolo(1, mucarauto, 1000, "FIAT", "Panda", 1000, "Automobile");   // Veicolo base
-        VeicoloPersonalizzato zip = new VeicoloPersonalizzato(2, virauto, 20, "Piaggio", "ZIP", 125, "Motoveicolo");    // Veicolo personalizzato
-        VeicoloNoleggiabile ninja = new VeicoloNoleggiabile(3, cundari, 2000, "Kawasaki", "Ninja", 600, "Motoveicolo"); // Veicolo noleggiabile
-        VeicoloNoleggiabile fiorino = new VeicoloNoleggiabile(4, cundari, 1700, "FIAT", "Fiorino", 1200, "Autoveicolo"); // Veicolo noleggiabile (già noleggiato)
-
+        Veicolo punto = new Veicolo(2, virauto, 1000, "FIAT", "Punto", 1300, "Automobile");   // Veicolo base
+        Veicolo modelX = new Veicolo(3, virauto, 1000, "Tesla", "Model X", 30000, "Automobile");   // Veicolo base
+        Veicolo f8 = new Veicolo(4, cundari, 1000, "Ferrari", "F8", 1000, "Automobile");   // Veicolo base
+        Veicolo tmax = new Veicolo(5, cundari, 1000, "Yamaha", "T-MAX", 1000, "Motoveicolo");   // Veicolo base
+        Veicolo zip = new Veicolo(6, virauto, 20, "Piaggio", "ZIP", 125, "Motoveicolo");    
+        Veicolo scania = new Veicolo(7, mucarauto, 20, "IVECO", "Scania", 2000, "Automobile");
+        Veicolo ninja = new Veicolo(8, cundari, 2000, "Kawasaki", "Ninja", 600, "Motoveicolo");
+        Veicolo fiorino = new Veicolo(9, cundari, 1700, "FIAT", "Fiorino", 1200, "Automobile");
+        Veicolo a1 = new Veicolo(10, virauto, 5000, "Audi", "A1", 1600, "Automobile");
+        Veicolo ypsilon = new Veicolo(4, virauto, 7000, "Lancia", "Ypsilon", 1300, "Automobile");
+        Veicolo giulietta = new Veicolo(5, mucarauto, 9000, "Alpha-Romeo", "Giulietta", 2000, "Automobile");
+        Veicolo v7 = new Veicolo(6, mucarauto, 4000, "Moto-Guzzi", "V7", 700, "Motoveicolo");
+        
+       
         // Descrizioni optional
         DescrizioneOptional specchietti = new DescrizioneOptional("Specchietti", 20, "Rossi");
         DescrizioneOptional verniceGialla = new DescrizioneOptional("Vernice gialla", 50, "Giallo");
         DescrizioneOptional marmittaNuova = new DescrizioneOptional("Marmitta nuova", 100, "Nero");
         DescrizioneOptional vetriOscurati = new DescrizioneOptional("Vetri oscurati", 150, "Nero");
-
+        DescrizioneOptional alettone = new DescrizioneOptional("Alettone", 1000, "Nero");
+        
+        //DescrizioneOptional su Veicolo
+        panda.getMappaDO().put(specchietti.getNome(),specchietti);
+        panda.getMappaDO().put(verniceGialla.getNome(),verniceGialla);
+        panda.getMappaDO().put(marmittaNuova.getNome(),alettone);
+        panda.getMappaDO().put(vetriOscurati.getNome(),alettone);
+        panda.getMappaDO().put(alettone.getNome(),alettone);
+        punto.getMappaDO().put(specchietti.getNome(),specchietti);
+        punto.getMappaDO().put(verniceGialla.getNome(),verniceGialla);
+        punto.getMappaDO().put(marmittaNuova.getNome(),alettone);
+        punto.getMappaDO().put(vetriOscurati.getNome(),alettone);
+        punto.getMappaDO().put(alettone.getNome(),alettone);
+        modelX.getMappaDO().put(specchietti.getNome(),specchietti);
+        modelX.getMappaDO().put(verniceGialla.getNome(),verniceGialla);
+        modelX.getMappaDO().put(marmittaNuova.getNome(),alettone);
+        modelX.getMappaDO().put(vetriOscurati.getNome(),alettone);
+        modelX.getMappaDO().put(alettone.getNome(),alettone);
+        f8.getMappaDO().put(specchietti.getNome(),specchietti);
+        f8.getMappaDO().put(verniceGialla.getNome(),verniceGialla);
+        f8.getMappaDO().put(marmittaNuova.getNome(),alettone);
+        f8.getMappaDO().put(vetriOscurati.getNome(),alettone);
+        f8.getMappaDO().put(alettone.getNome(),alettone);
+        tmax.getMappaDO().put(verniceGialla.getNome(),verniceGialla);
+        tmax.getMappaDO().put(marmittaNuova.getNome(),alettone);
+        
+        zip.getMappaDO().put(verniceGialla.getNome(),verniceGialla);
+        zip.getMappaDO().put(marmittaNuova.getNome(),alettone);
+        scania.getMappaDO().put(specchietti.getNome(),specchietti);
+        scania.getMappaDO().put(verniceGialla.getNome(),verniceGialla);
+        scania.getMappaDO().put(marmittaNuova.getNome(),alettone);
+        scania.getMappaDO().put(vetriOscurati.getNome(),alettone);
+        scania.getMappaDO().put(alettone.getNome(),alettone);
+        
+        ninja.getMappaDO().put(verniceGialla.getNome(),verniceGialla);
+        ninja.getMappaDO().put(marmittaNuova.getNome(),alettone);
+        fiorino.getMappaDO().put(specchietti.getNome(),specchietti);
+        fiorino.getMappaDO().put(verniceGialla.getNome(),verniceGialla);
+        fiorino.getMappaDO().put(marmittaNuova.getNome(),alettone);
+        fiorino.getMappaDO().put(vetriOscurati.getNome(),alettone);
+        fiorino.getMappaDO().put(alettone.getNome(),alettone);        
+        a1.getMappaDO().put(specchietti.getNome(),specchietti);
+        a1.getMappaDO().put(verniceGialla.getNome(),verniceGialla);
+        a1.getMappaDO().put(marmittaNuova.getNome(),alettone);
+        a1.getMappaDO().put(vetriOscurati.getNome(),alettone);
+        a1.getMappaDO().put(alettone.getNome(),alettone);      
+        scania.getMappaDO().put(specchietti.getNome(),specchietti);
+        scania.getMappaDO().put(verniceGialla.getNome(),verniceGialla);
+        scania.getMappaDO().put(marmittaNuova.getNome(),alettone);
+        scania.getMappaDO().put(vetriOscurati.getNome(),alettone);
+        scania.getMappaDO().put(alettone.getNome(),alettone);      
+        ypsilon.getMappaDO().put(specchietti.getNome(),specchietti);
+        ypsilon.getMappaDO().put(verniceGialla.getNome(),verniceGialla);
+        ypsilon.getMappaDO().put(marmittaNuova.getNome(),alettone);
+        ypsilon.getMappaDO().put(vetriOscurati.getNome(),alettone);
+        ypsilon.getMappaDO().put(alettone.getNome(),alettone);
+        giulietta.getMappaDO().put(specchietti.getNome(),specchietti);
+        giulietta.getMappaDO().put(verniceGialla.getNome(),verniceGialla);
+        giulietta.getMappaDO().put(marmittaNuova.getNome(),alettone);
+        giulietta.getMappaDO().put(vetriOscurati.getNome(),alettone);
+        giulietta.getMappaDO().put(alettone.getNome(),alettone);
+        v7.getMappaDO().put(verniceGialla.getNome(),verniceGialla);
+        v7.getMappaDO().put(marmittaNuova.getNome(),alettone);
+        
+       
+        // Salvataggio optional -> veicoli
+        panda.getMappaDO().put("Vetri Oscurati", vetriOscurati);
+        panda.getMappaDO().put("Specchietti", specchietti);
+        panda.getMappaDO().put("Vernice gialla", verniceGialla);
+        
+        zip.getMappaDO().put("Specchietti", specchietti);
+        zip.getMappaDO().put("Vernice gialla", verniceGialla);
+        zip.getMappaDO().put("Marmitta nuova", marmittaNuova);
+        
         // Optional
         Optional specchiettiOP = new Optional(specchietti);
         Optional verniceGiallaOP = new Optional(verniceGialla);
         Optional marmittaNuovaOP = new Optional(marmittaNuova);
+        Optional vetriOscuratiOP = new Optional(vetriOscurati);
+        Optional alettoneOP = new Optional(alettone);
 
-        // Noleggio
-        Noleggio noleggioFiorino = new Noleggio(riccardo, fiorino, "Catania");
+        //Salva Veicoli 
+        P.getMappaVeicoli().put(panda.getCodice(), panda);
+        P.getMappaVeicoli().put(punto.getCodice(),punto );
+        P.getMappaVeicoli().put(modelX.getCodice(),modelX );
+        P.getMappaVeicoli().put(f8.getCodice(), f8 );
+        P.getMappaVeicoli().put(tmax.getCodice(), tmax);
+        P.getMappaVeicoli().put(zip.getCodice(), zip);
+        P.getMappaVeicoli().put(scania.getCodice(), scania);
+        P.getMappaVeicoli().put(ninja.getCodice(), ninja);
+        P.getMappaVeicoli().put(fiorino.getCodice(), fiorino);
+        P.getMappaVeicoli().put(a1.getCodice(), a1);
+        P.getMappaVeicoli().put(ypsilon.getCodice(), ypsilon);
+        P.getMappaVeicoli().put(giulietta.getCodice(), giulietta);
+        P.getMappaVeicoli().put(v7.getCodice(), v7);
+        
 
-        // Foto
-        Foto f1 = new Foto("Avanti");
-        Foto f2 = new Foto("Dietro");
-        Foto f3 = new Foto("Sinistra");
-        Foto f4 = new Foto("Destra");
 
         // Salvataggio utenti
+        mappaUtenti = new HashMap<>();
         mappaUtenti.put(riccardo.getCodice(), riccardo);
         mappaUtenti.put(philip.getCodice(), philip);
         mappaUtenti.put(orazio.getCodice(), orazio);
 
         // Salvataggio concessionari
+        mappaConcessionari = new HashMap<>();
         mappaConcessionari.put(mucarauto.getCodice(), mucarauto);
         mappaConcessionari.put(virauto.getCodice(), virauto);
         mappaConcessionari.put(cundari.getCodice(), cundari);
 
-        // Salvataggio optional -> veicoli
-        panda.getMappaDO().put("Vetri Oscurati", vetriOscurati);
-        panda.getMappaDO().put("Specchietti", specchietti);
-        panda.getMappaDO().put("Vernice gialla", verniceGialla);
-        zip.getMappaDO().put("Specchietti", specchietti);
-        zip.getMappaDO().put("Vernice gialla", verniceGialla);
-        zip.getMappaDO().put("Marmitta nuova", marmittaNuova);
-        zip.getListaOptional().add(specchiettiOP);
-        zip.getListaOptional().add(verniceGiallaOP);
-        zip.getListaOptional().add(marmittaNuovaOP);
-        ninja.getListaOptional().add(marmittaNuovaOP);
-        ninja.getListaOptional().add(specchiettiOP);
-        fiorino.getListaOptional().add(specchiettiOP);
+        
+        //MetodiPagamento
+        MetodoPagamentoAdapter contoCorrente = new MetodoPagamentoAdapter("ContoCorrente",1,5);
+        MetodoPagamentoAdapter payPal = new MetodoPagamentoAdapter("PayPal",1,5);
 
-        // Inserimento noleggio
-        fiorino.setNoleggio(noleggioFiorino);
-
-        // Inserimento foto
+         //Salvataggio MetodoPagamento
+        mappaMetodoPagamento = new HashMap<>(); 
+        mappaMetodoPagamento.put(contoCorrente.getCodice(), contoCorrente );
+        mappaMetodoPagamento.put(payPal.getCodice(), payPal );
+        
+        // Foto
+        Foto f1 = new Foto("Avanti");
+        Foto f2 = new Foto("Dietro");
+        Foto f3 = new Foto("Sinistra");
+        Foto f4 = new Foto("Destra");
+        
+   
+        // Inserimento foto --> Veicoli
         panda.getListaFoto().add(f1);
         panda.getListaFoto().add(f2);
         panda.getListaFoto().add(f3);
@@ -136,13 +233,130 @@ public class A4R {
         fiorino.getListaFoto().add(f2);
         fiorino.getListaFoto().add(f3);
         fiorino.getListaFoto().add(f4);
+        
+        punto.getListaFoto().add(f1);
+        punto.getListaFoto().add(f2);
+        punto.getListaFoto().add(f3);
+        punto.getListaFoto().add(f4);
+                
+        modelX.getListaFoto().add(f1);
+        modelX.getListaFoto().add(f2);
+        modelX.getListaFoto().add(f3);
+        modelX.getListaFoto().add(f4);
+        
+        f8.getListaFoto().add(f1);
+        f8.getListaFoto().add(f2);
+        f8.getListaFoto().add(f3);
+        f8.getListaFoto().add(f4);
+        
+        tmax.getListaFoto().add(f1);
+        tmax.getListaFoto().add(f2);
+        tmax.getListaFoto().add(f3);
+        tmax.getListaFoto().add(f4);
+        
+        scania.getListaFoto().add(f1);
+        scania.getListaFoto().add(f2);
+        scania.getListaFoto().add(f3);
+        scania.getListaFoto().add(f4);
+        
+        a1.getListaFoto().add(f1);
+        a1.getListaFoto().add(f2);
+        a1.getListaFoto().add(f3);
+        a1.getListaFoto().add(f4);
+        
+        ypsilon.getListaFoto().add(f1);
+        ypsilon.getListaFoto().add(f2);
+        ypsilon.getListaFoto().add(f3);
+        ypsilon.getListaFoto().add(f4);
+        
+        giulietta.getListaFoto().add(f1);
+        giulietta.getListaFoto().add(f2);
+        giulietta.getListaFoto().add(f3);
+        giulietta.getListaFoto().add(f4);
 
+        v7.getListaFoto().add(f1);
+        v7.getListaFoto().add(f2);
+        v7.getListaFoto().add(f3);
+        v7.getListaFoto().add(f4);
+//VeicoloPersonalizzato(int codice, Concessionario concessionario, int prezzoBase, String produttore, String modello, int cilindrata, String tipoVeicolo, HashMap<String, DescrizioneOptional> mappaDO, ArrayList<Foto> listaFoto)
+        VeicoloPersonalizzato zipP = new VeicoloPersonalizzato(1, virauto, 20, "Piaggio", "ZIP", 125, "Motoveicolo", zip.getMappaDO(),zip.getListaFoto() );    // Veicolo personalizzato
+        VeicoloPersonalizzato scaniaP = new VeicoloPersonalizzato(2, mucarauto, 20, "IVECO", "Scania", 2000, "Automobile",scania.getMappaDO(), scania.getListaFoto());    // Veicolo personalizzato
+        VeicoloPersonalizzato ninjaP = new VeicoloPersonalizzato(1, cundari, 2000, "Kawasaki", "Ninja", 600, "Motoveicolo",ninja.getMappaDO(), ninja.getListaFoto()); // Veicolo noleggiabile
+        VeicoloPersonalizzato fiorinoP = new VeicoloPersonalizzato(2, cundari, 1700, "FIAT", "Fiorino", 1200, "Automobile",fiorino.getMappaDO(), fiorino.getListaFoto()); // Veicolo noleggiabile (già noleggiato)
+        VeicoloPersonalizzato a1P = new VeicoloPersonalizzato(3, virauto, 5000, "Audi", "A1", 1600, "Automobile",a1.getMappaDO(), a1.getListaFoto()); // Veicolo noleggiabile
+        VeicoloPersonalizzato ypsilonP = new VeicoloPersonalizzato(4, virauto, 7000, "Lancia", "Ypsilon", 1300, "Automobile", ypsilon.getMappaDO(),  ypsilon.getListaFoto()); // Veicolo noleggiabile
+        VeicoloPersonalizzato giuliettaP = new VeicoloPersonalizzato(5, mucarauto, 9000, "Alpha-Romeo", "Giulietta", 2000, "Automobile",giulietta.getMappaDO(), giulietta.getListaFoto()); // Veicolo noleggiabile
+        VeicoloPersonalizzato v7P = new VeicoloPersonalizzato(6, mucarauto, 4000, "Moto-Guzzi", "V7", 700, "Motoveicolo",v7.getMappaDO(), v7.getListaFoto()); // Veicolo noleggiabile
+        
+        VeicoloNoleggiabile ninjaN = new VeicoloNoleggiabile(1, cundari, 2000, "Kawasaki", "Ninja", 600, "Motoveicolo",ninja.getMappaDO(), ninja.getListaFoto()); // Veicolo noleggiabile
+        VeicoloNoleggiabile fiorinoN = new VeicoloNoleggiabile(2, cundari, 1700, "FIAT", "Fiorino", 1200, "Automobile",fiorino.getMappaDO(), fiorino.getListaFoto()); // Veicolo noleggiabile (già noleggiato)
+        VeicoloNoleggiabile a1N = new VeicoloNoleggiabile(3, virauto, 5000, "Audi", "A1", 1600, "Automobile",a1.getMappaDO(), a1.getListaFoto()); // Veicolo noleggiabile
+        VeicoloNoleggiabile ypsilonN = new VeicoloNoleggiabile(4, virauto, 7000, "Lancia", "Ypsilon", 1300, "Automobile",ypsilon.getMappaDO(), ypsilon.getListaFoto()); // Veicolo noleggiabile
+        VeicoloNoleggiabile giuliettaN = new VeicoloNoleggiabile(5, mucarauto, 9000, "Alpha-Romeo", "Giulietta", 2000, "Automobile", giulietta.getMappaDO(),  giulietta.getListaFoto()); // Veicolo noleggiabile
+        VeicoloNoleggiabile v7N = new VeicoloNoleggiabile(6, mucarauto, 4000, "Moto-Guzzi", "V7", 700, "Motoveicolo",v7.getMappaDO(), v7.getListaFoto()); // Veicolo noleggiabile
+        
+        //Optional su VeicoloPersonalizzato
+        zipP.getListaOptional().add(marmittaNuovaOP);
+        zipP.getListaOptional().add(verniceGiallaOP);
+        scaniaP.getListaOptional().add(specchiettiOP);
+        scaniaP.getListaOptional().add(verniceGiallaOP);
+        scaniaP.getListaOptional().add(marmittaNuovaOP);
+        scaniaP.getListaOptional().add(vetriOscuratiOP );
+        scaniaP.getListaOptional().add(alettoneOP);
+        ninjaP.getListaOptional().add(marmittaNuovaOP);
+        ninjaP.getListaOptional().add(verniceGiallaOP);
+        
+        
+        fiorinoP.getListaOptional().add(specchiettiOP);
+        fiorinoP.getListaOptional().add(verniceGiallaOP);
+        fiorinoP.getListaOptional().add(marmittaNuovaOP);
+        fiorinoP.getListaOptional().add(vetriOscuratiOP );
+        fiorinoP.getListaOptional().add(alettoneOP);
+        
+        a1P.getListaOptional().add(specchiettiOP);
+        a1P.getListaOptional().add(verniceGiallaOP);
+        a1P.getListaOptional().add(marmittaNuovaOP);
+        a1P.getListaOptional().add(vetriOscuratiOP );
+        a1P.getListaOptional().add(alettoneOP);
+        
+        ypsilonP.getListaOptional().add(specchiettiOP);
+        ypsilonP.getListaOptional().add(verniceGiallaOP);
+        ypsilonP.getListaOptional().add(marmittaNuovaOP);
+        ypsilonP.getListaOptional().add(vetriOscuratiOP );
+        ypsilonP.getListaOptional().add(alettoneOP);
+        
+        giuliettaP.getListaOptional().add(specchiettiOP);
+        giuliettaP.getListaOptional().add(verniceGiallaOP);
+        giuliettaP.getListaOptional().add(marmittaNuovaOP);
+        giuliettaP.getListaOptional().add(vetriOscuratiOP );
+        giuliettaP.getListaOptional().add(alettoneOP);
+        
+        v7P.getListaOptional().add(marmittaNuovaOP);
+        v7P.getListaOptional().add(verniceGiallaOP);
+        
+        // Noleggio
+        Noleggio noleggioFiorino = new Noleggio(riccardo, fiorinoN, "Catania");
+        
+        //Salva VeicoliPersonalizzati
+        P.getMappaVeicoliPersonalizzati().put(zip.codice, zipP);
+        P.getMappaVeicoliPersonalizzati().put(scania.codice,scaniaP );
+
+        //Salva VeicoliNoleggiabili
+        P.getMappaVeicoliNoleggiabili().put(ninja.getCodice(), ninjaN);
+        P.getMappaVeicoliNoleggiabili().put(fiorino.getCodice(), fiorinoN);
+        P.getMappaVeicoliNoleggiabili().put(a1.getCodice(),a1N );
+        P.getMappaVeicoliNoleggiabili().put(ypsilon.getCodice(),ypsilonN );
+        P.getMappaVeicoliNoleggiabili().put(giulietta.getCodice(),giuliettaN );
+        P.getMappaVeicoliNoleggiabili().put(v7.getCodice(),v7N );
+        
+        
+        // Inserimento noleggio
+        ordiniErogati = new ArrayList<>();
+        ordiniErogati.add(noleggioFiorino);
+        fiorino.setNoleggio(noleggioFiorino);
+        
         // Inserimento veicoli
         P = P.getInstance();
-        P.getMappaVeicoli().put(panda.getCodice(), panda);
-        P.getMappaVeicoliPersonalizzati().put(zip.getCodice(), zip);
-        P.getMappaVeicoliNoleggiabili().put(ninja.getCodice(), ninja);
-        P.getMappaVeicoliNoleggiabili().put(fiorino.getCodice(), fiorino);
     }
 
     public void mostraAcquista() {
@@ -170,6 +384,9 @@ public class A4R {
 
     public VeicoloNoleggiabile scegliVeicoloNoleggio(int codice) {
         veicoloNoleggiabile = P.getMappaVeicoliNoleggiabili().get(codice);
+        if(veicoloNoleggiabile.equals(null)){
+            System.out.println("Non è stato trovato il veicolo di codice: " + codice);
+        }
         luogoRitiro = veicoloNoleggiabile.recuperaLuogo();
         ricevutaNoleggio = new Noleggio(utente, veicoloNoleggiabile, luogoRitiro);
         return veicoloNoleggiabile;
@@ -265,8 +482,8 @@ public class A4R {
             System.out.println("Inserisci il produttore: ");
             String produttore = input.nextLine();
             System.out.println("Inserisci il modello dell'auto");
-            String modello = input.nextLine();
-            System.out.println("Inserisci il tipo del veicolo (Autoveicolo/Motoveicolo)");
+            String modello = input.nextLine(); 
+            System.out.println("Inserisci il tipo del veicolo (Automobile/Motoveicolo)");
             String tipoVeicolo = input.nextLine();
             filtraVeicoliAcquisto(produttore, modello, tipoVeicolo);
         }
@@ -278,6 +495,7 @@ public class A4R {
         }
         VPcorrente = scegliVeicoloAcquisto(codiceV);
         System.out.println("Ecco la lista di optional disponibili per il veicolo scelto: ");
+        
         mostraDescrizioniOptional(VPcorrente);
         System.out.println("Per favore, scegli l'optional da aggiungere inserendo il rispettivo nome ('esci' per tornare al menù principale): ");
         risposta = input.nextLine();
@@ -325,7 +543,7 @@ public class A4R {
             String produttore = input.nextLine();
             System.out.println("Inserisci il modello dell'auto");
             String modello = input.nextLine();
-            System.out.println("Inserisci il tipo del veicolo (Autoveicolo/Motoveicolo)");
+            System.out.println("Inserisci il tipo del veicolo (Automobile/Motoveicolo)");
             String tipoVeicolo = input.nextLine();
             filtraVeicoliNoleggio(produttore, modello, tipoVeicolo);
         }

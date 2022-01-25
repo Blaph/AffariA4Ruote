@@ -13,13 +13,14 @@ import java.util.HashMap;
  */
 public class VeicoloNoleggiabile extends VeicoloPersonalizzato {
 
-    public VeicoloNoleggiabile(int codice, Concessionario concessionario, int prezzoBase, String produttore, String modello, int cilindrata, String tipoVeicolo) {
-        super(codice, concessionario, prezzoBase, produttore, modello, cilindrata, tipoVeicolo);
+    public VeicoloNoleggiabile(int codice, Concessionario concessionario, int prezzoBase, String produttore, String modello, int cilindrata, String tipoVeicolo,  HashMap<String, DescrizioneOptional> mappaDO, ArrayList<Foto> listaFoto) {
+        super(codice, concessionario, prezzoBase, produttore, modello, cilindrata, tipoVeicolo, mappaDO, listaFoto);
     }
 
     private int prezzoGiornaliero;
     private Concessionario C;
     private Noleggio noleggio = null;
+    private boolean inNoleggio = false;
 
     public String recuperaLuogo() {
         return concessionario.getLuogo();
@@ -120,5 +121,9 @@ public class VeicoloNoleggiabile extends VeicoloPersonalizzato {
 
     public void setConcessionario(Concessionario concessionario) {
         this.concessionario = concessionario;
+    }
+    
+    public boolean getInNoleggio(){
+        return inNoleggio;
     }
 }
