@@ -9,9 +9,4 @@ Il progetto è stato realizzato usando:
 - "Astah UML" per tutti i diagrammi UML;
 - "NetBeans" per la scrittura/compilazione/esecuzione del codice e dei test tramite JUnit5.
 
-Per eseguire il codice basta caricare il package in un IDE e avviarlo: il main si trova nella classe "UI".
-
-
-Releases:<br>
-"main" branch -> progetto finale comprensivo di test <br>
-"philiptamb-patch" -> versione di cui è stato eseguito il merge finale nel main. Questo branch ormai è obsoleto
+Per eseguire il codice basta scaricarlo, inserirlo in un IDE ed avviarlo. Il main si trova nel file "UI.java"
