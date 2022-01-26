@@ -12,6 +12,6 @@ Il progetto è stato realizzato usando:
 Per eseguire il codice basta caricare il package in un IDE e avviarlo: il main si trova nella classe "UI".
 
 
-Releases:
-"main" branch -> progetto finale, senza test
+Releases:<br>
+"main" branch -> progetto finale, senza test<br>
 "philiptamb-patch" -> progetto finale, leggermente modificato, con i test da eseguire
