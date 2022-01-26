@@ -50,7 +50,7 @@ public class Noleggio extends Ordine {
     }
 
     @Override
-    public float impostaOrdine(MetodoPagamentoAdapter metodoPagamentoAdapter) {
+    public float impostaOrdine(MetodoPagamento metodoPagamento) {
         scontoPremium = utente.getScontoPremium();
         prezzoGiornaliero = veicoloNoleggiabile.getPrezzoGiornaliero();
         scontoConcessionario = concessionario.getScontoConcessionario();
@@ -59,7 +59,7 @@ public class Noleggio extends Ordine {
     }
 
     @Override
-    public float calcoloTotaleAcquisto(int prezzoBase, int IVA, float tasseDogane, int commissioneA4R, float commissionePagamento, float costoSpedizione, int scontoPremium, int scontoA4R, int scontoconcessionario, int prezzoOptional) {
+    public float calcoloTotaleAcquisto(int prezzoBase, int IVA, float tasseDogane, int commissioneA4R, float commissionePagamento, float costoSpedizione, int scontoPremium, int scontoA4R, int scontoConcessionario, int prezzoOptional) {
         return 0;
     }
 
@@ -72,7 +72,10 @@ public class Noleggio extends Ordine {
     public void scegliLuogoRitiro(String luogoRitiro) {
         this.luogoRitiro = luogoRitiro;
     }
-
+    
+    public int getPrezzoGiornaliero(){
+     return prezzoGiornaliero;
+    }
     //Getter/Setter
     public LocalDate getInizio() {
         return inizio;
@@ -81,6 +84,42 @@ public class Noleggio extends Ordine {
     public void setInizio(LocalDate inizio) {
         this.inizio = inizio;
     }
+    
+    public int getPrezzoBase(){
+        return prezzoBase;
+    }
+    
+    public int getIva(){
+        return IVA;
+    }
+    
+     public float getCommissionePagamento(){
+    return commissionePagamento;
+    }
+
+    public float getCostoSpedizione(){
+        return costoSpedizione;
+    }
+    
+    public int getScontoPremium(){
+        return scontoPremium;
+    }
+    
+        public int getScontoA4R(){
+        return scontoA4R;
+    }
+
+    public int getScontoConcessionario(){
+        return scontoConcessionario;
+    }
+  
+    public int getCommissioneA4R(){
+        return commissioneA4R;
+    }
+    
+    public int getDurataNoleggio(){
+        return durataNoleggio;
+    }
 
     public LocalDate getFine() {
         return fine;
@@ -88,10 +127,6 @@ public class Noleggio extends Ordine {
 
     public void setFine(LocalDate fine) {
         this.fine = fine;
-    }
-
-    public int getDurataNoleggio() {
-        return durataNoleggio;
     }
 
     public void setDurataNoleggio(int durataNoleggio) {
@@ -130,25 +165,19 @@ public class Noleggio extends Ordine {
         this.tasseDogane = tasseDogane;
     }
 
-    public float getCommissionePagamento() {
-        return commissionePagamento;
-    }
+
 
     public void setCommissionePagamento(float commissionePagamento) {
         this.commissionePagamento = commissionePagamento;
     }
 
-    public float getCostoSpedizione() {
-        return costoSpedizione;
-    }
+
 
     public void setCostoSpedizione(float costoSpedizione) {
         this.costoSpedizione = costoSpedizione;
     }
 
-    public int getScontoA4R() {
-        return scontoA4R;
-    }
+
 
     public void setScontoA4R(int scontoA4R) {
         this.scontoA4R = scontoA4R;
