@@ -13,5 +13,5 @@ Per eseguire il codice basta caricare il package in un IDE e avviarlo: il main s
 
 
 Releases:<br>
-"main" branch -> progetto finale, senza test<br>
-"philiptamb-patch" -> progetto finale, leggermente modificato, con i test da eseguire
+"main" branch -> progetto finale comprensivo di test <br>
+"philiptamb-patch" -> versione di cui è stato eseguito il merge finale nel main. Questo branch ormai è obsoleto
