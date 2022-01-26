@@ -23,7 +23,7 @@ public abstract class Ordine {
     protected float prezzoFinale;
     protected VeicoloNoleggiabile veicoloNoleggiabile;
 
-    public abstract float impostaOrdine(MetodoPagamento metodoPagamento);
+    public abstract float impostaOrdine(MetodoPagamentoAdapter metodoPagamentoAdapter);
     public abstract void scegliLuogoRitiro(String luogoRitiro);
     public abstract void aggiornaTasseDogane(String luogoRitiro);
     public abstract void aggiornaCostoSpedizione(String luogoRitiro);

@@ -29,7 +29,7 @@ public class Acquisto extends Ordine {
     private int scontoPremium;
 
     @Override
-    public float impostaOrdine(MetodoPagamento metodoPagamento) {
+    public float impostaOrdine(MetodoPagamentoAdapter metodoPagamentoAdapter) {
         scontoPremium = utente.getScontoPremium();
         prezzoBase = VPcorrente.getPrezzoBase();
         prezzoOptional = VPcorrente.getPrezzoOptional();

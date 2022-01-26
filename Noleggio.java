@@ -50,7 +50,7 @@ public class Noleggio extends Ordine {
     }
 
     @Override
-    public float impostaOrdine(MetodoPagamento metodoPagamento) {
+    public float impostaOrdine(MetodoPagamentoAdapter metodoPagamentoAdapter) {
         scontoPremium = utente.getScontoPremium();
         prezzoGiornaliero = veicoloNoleggiabile.getPrezzoGiornaliero();
         scontoConcessionario = concessionario.getScontoConcessionario();

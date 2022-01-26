@@ -63,6 +63,8 @@ public class A4R {
         Utente philip = new Utente(2, "Philip", "Tambe'", "Corso Italia", 5, true);
         Utente orazio = new Utente(3, "Orazio", "Tomarchio", "Cittadella Universitaria", 20, false);
 
+        this.utente = riccardo;
+
         // Concessionari
         Concessionario mucarauto = new Concessionario(1, "Mu.Car.Auto", "Aci San Filippo", 0);
         Concessionario virauto = new Concessionario(2, "Virauto", "Catania", 10);
@@ -201,20 +203,19 @@ public class A4R {
 
         
         //MetodiPagamento
-        MetodoPagamentoAdapter contoCorrente = new MetodoPagamentoAdapter("ContoCorrente",1,5);
+        MetodoPagamentoAdapter contoCorrente = new MetodoPagamentoAdapter("ContoCorrente",2,5);
         MetodoPagamentoAdapter payPal = new MetodoPagamentoAdapter("PayPal",1,5);
 
          //Salvataggio MetodoPagamento
         mappaMetodoPagamento = new HashMap<>(); 
-        mappaMetodoPagamento.put(contoCorrente.getCodice(), contoCorrente );
-        mappaMetodoPagamento.put(payPal.getCodice(), payPal );
+        mappaMetodoPagamento.put(contoCorrente.getCodice(), contoCorrente);
+        mappaMetodoPagamento.put(payPal.getCodice(), payPal);
         
         // Foto
         Foto f1 = new Foto("Avanti");
         Foto f2 = new Foto("Dietro");
         Foto f3 = new Foto("Sinistra");
         Foto f4 = new Foto("Destra");
-        
    
         // Inserimento foto --> Veicoli
         panda.getListaFoto().add(f1);
@@ -379,14 +380,12 @@ public class A4R {
         veicolo = P.getMappaVeicoli().get(codice);
         VPcorrente = P.creaVeicoloPersonalizzato(veicolo);
         ricevutaAcquisto = new Acquisto(utente, VPcorrente);
+        ordineCorrente = ricevutaAcquisto;
         return VPcorrente;
     }
 
     public VeicoloNoleggiabile scegliVeicoloNoleggio(int codice) {
         veicoloNoleggiabile = P.getMappaVeicoliNoleggiabili().get(codice);
-        if(veicoloNoleggiabile.equals(null)){
-            System.out.println("Non è stato trovato il veicolo di codice: " + codice);
-        }
         luogoRitiro = veicoloNoleggiabile.recuperaLuogo();
         ricevutaNoleggio = new Noleggio(utente, veicoloNoleggiabile, luogoRitiro);
         return veicoloNoleggiabile;
@@ -405,7 +404,7 @@ public class A4R {
 
         //Mostra una lista di metodi di pagamento disponibili
         for (int codice : mappaMetodoPagamento.keySet()) {
-            System.out.println(mappaMetodoPagamento.get(codice));
+            System.out.println("Codice: " + mappaMetodoPagamento.get(codice).getCodice() + ", Nome: " + mappaMetodoPagamento.get(codice).getNome());
         }
     }
 
@@ -420,6 +419,7 @@ public class A4R {
 
     public void scegliPagamento(int codicePagamento) {
         metodoPagamentoAdapter = mappaMetodoPagamento.get(codicePagamento);
+        System.out.println("Pagamento con: " + metodoPagamentoAdapter.getNome() + ", codice: " + metodoPagamentoAdapter.getCodice() + ", commissione: " + metodoPagamentoAdapter.getCommissioniPagamento());
         setPrezzoFinale(ordineCorrente.impostaOrdine(metodoPagamentoAdapter));
     }
 
@@ -473,7 +473,7 @@ public class A4R {
     }
 
     // L'utente ha scelto di visualizzare i veicoli in vendita
-    public void opzione1() {
+    public void opzione1(){
         int codiceV = 0;
         mostraAcquista();
         System.out.println("Desideri filtrare la lista? (s/n)");
@@ -489,6 +489,7 @@ public class A4R {
         }
         System.out.println("Inserici il codice corrispondente al veicolo che hai scelto (0 per tornare indietro)");
         codiceV = input.nextInt();
+        
         if (codiceV == 0) {
             System.err.println("Ritorno al menu' in corso...");
             return;
@@ -498,6 +499,7 @@ public class A4R {
         
         mostraDescrizioniOptional(VPcorrente);
         System.out.println("Per favore, scegli l'optional da aggiungere inserendo il rispettivo nome ('esci' per tornare al menù principale): ");
+        input.nextLine();
         risposta = input.nextLine();
         if (risposta.equals("esci")) {
             System.out.println("Ritorno al menu' in corso...");
@@ -516,6 +518,7 @@ public class A4R {
         }
         scegliPagamento(codiceV);
         System.out.println("Per confermare il pagamento digita 'ok'. 'esci' per ritornare al menu' principale ed annullare l'acquisto.");
+        input.nextLine();
         risposta = input.nextLine();
         if (risposta.equals("esci")) {
             System.out.println("Ritorno al menu' in corso...");
@@ -526,7 +529,7 @@ public class A4R {
         System.out.println("---- Riepilogo dell'acquisto ----");
         System.out.println(ricevutaAcquisto);
         System.out.println("Email inviata.");
-        risposta = input.next();
+        input.next();
         System.out.println("Ritorno al menu' in corso...");
     }
 
@@ -563,7 +566,7 @@ public class A4R {
             periodoNoleggio(LocalDate.parse(inizio, formato), LocalDate.parse(fine, formato));
         }
         catch (IllegalArgumentException e) {
-            System.out.println("Inserire il data in un formato valido: " + e);
+            System.out.println("Inserire la data in un formato valido: " + e);
             System.out.println("Ritorno al menu' in corso...");
             return;
         }
@@ -590,10 +593,6 @@ public class A4R {
     }
 
     public void opzione3(){
-        System.out.println("TODO: fix later");
-    }
-
-    public void opzione4(){
         System.out.println("Inserisci il prezzo base del veicolo:");
         int prezzoBase = input.nextInt();
         System.out.println("Inserisci il produttore del veicolo:");

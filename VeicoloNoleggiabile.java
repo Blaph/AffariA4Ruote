@@ -23,7 +23,7 @@ public class VeicoloNoleggiabile extends VeicoloPersonalizzato {
     private boolean inNoleggio = false;
 
     public String recuperaLuogo() {
-        return concessionario.getLuogo();
+        return C.getLuogo();
     }
 
     //Getter/Setter

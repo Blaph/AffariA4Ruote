@@ -38,7 +38,7 @@ public class VeicoloPersonalizzato extends Veicolo {
     // Stampa elenco degli optional
     public void mostraDescrizioniOptional() {
         for (String nome : mappaDO.keySet()) {
-            System.out.println("Codice: " + nome + ", Optional: " + mappaDO.get(codice).getNome());
+            System.out.println("Codice: " + nome);
         }
     }
 

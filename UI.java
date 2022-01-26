@@ -20,9 +20,9 @@ public class UI {
 
         system.startup(P);
 
-        //Il menÃ¹ viene stampato ogni volta che si torna indietro
+        //Il menù viene stampato ogni volta che si torna indietro
         while(true){
-            // MenÃ¹ di benvenuto
+            // Menù di benvenuto
             System.out.println("  ______");
             System.out.println(" /|_||_\\`.__");
             System.out.println("(   _    _ _\\");
@@ -32,7 +32,7 @@ public class UI {
             System.out.println("2. Noleggia veicolo");
             System.out.println("3. Carica nuovo mezzo (devi prima autenticarti)");
             System.out.println("-----------------------------------------------");
-            System.out.println("Per favore, scegli l'attivitÃ  da eseguire: inserisci un numero.");
+            System.out.println("Per favore, scegli l'attivita'  da eseguire: inserisci un numero.");
 
             // Casi d'uso
             int num = input.nextInt();
@@ -44,7 +44,7 @@ public class UI {
                     system.opzione2();  // UC8
                     break;
                 case 3:
-                    system.opzione4();  // UC3
+                    system.opzione3();  // UC3
                     break;
                 default:
                 System.out.println("Opzione non valida.");
