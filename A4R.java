@@ -4,10 +4,10 @@
  */
 package A4R;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Scanner;
 
 /**
@@ -38,6 +38,8 @@ public class A4R {
     private String luogoRitiro;
     private int counterFoto = 1;
     private Veicolo V;
+    private GregorianCalendar inizio = new GregorianCalendar();
+    private GregorianCalendar fine = new GregorianCalendar();
 
     private Scanner input;
 
@@ -343,12 +345,12 @@ public class A4R {
         P.getMappaVeicoliPersonalizzati().put(scania.codice,scaniaP );
 
         //Salva VeicoliNoleggiabili
-        P.getMappaVeicoliNoleggiabili().put(ninja.getCodice(), ninjaN);
-        P.getMappaVeicoliNoleggiabili().put(fiorino.getCodice(), fiorinoN);
-        P.getMappaVeicoliNoleggiabili().put(a1.getCodice(),a1N );
-        P.getMappaVeicoliNoleggiabili().put(ypsilon.getCodice(),ypsilonN );
-        P.getMappaVeicoliNoleggiabili().put(giulietta.getCodice(),giuliettaN );
-        P.getMappaVeicoliNoleggiabili().put(v7.getCodice(),v7N );
+        P.getMappaVeicoliNoleggiabili().put(ninjaN.getCodice(), ninjaN);
+        P.getMappaVeicoliNoleggiabili().put(fiorinoN.getCodice(), fiorinoN);
+        P.getMappaVeicoliNoleggiabili().put(a1N.getCodice(),a1N );
+        P.getMappaVeicoliNoleggiabili().put(ypsilonN.getCodice(),ypsilonN );
+        P.getMappaVeicoliNoleggiabili().put(giuliettaN.getCodice(),giuliettaN );
+        P.getMappaVeicoliNoleggiabili().put(v7N.getCodice(),v7N );
         
         
         // Inserimento noleggio
@@ -408,7 +410,7 @@ public class A4R {
         }
     }
 
-    public void periodoNoleggio(LocalDate inizio, LocalDate fine) {
+    public void periodoNoleggio(GregorianCalendar inizio, GregorianCalendar fine) {
         ricevutaNoleggio.setInizio(inizio);
         ricevutaNoleggio.setFine(fine);
         durataNoleggio = ricevutaNoleggio.calcolaDurata(inizio, fine);
@@ -426,7 +428,10 @@ public class A4R {
     public void effettuaPagamentoAcquisto(float prezzoTotale) {
         esitoPagamento = metodoPagamentoAdapter.effettuaPagamento(prezzoTotale, ordineCorrente.tipologiaOrdine);
         if (esitoPagamento.equals("ok")) {
-            ricevutaAcquisto.aggiornaAcquisto(LocalDate.now());
+            GregorianCalendar dataAcquisto = new GregorianCalendar();
+              System.out.println("Data suddivisa, in formato Gregorian Calendar:\n" + dataAcquisto.get(Calendar.DAY_OF_MONTH) + "/" + (dataAcquisto.get(Calendar.MONTH) +1) + "/" + dataAcquisto.get(Calendar.YEAR) + ", " + "the n " + (dataAcquisto.get(Calendar.DAY_OF_WEEK)-1) + " of the week" + ", the " + dataAcquisto.get(Calendar.DAY_OF_YEAR) + " day of the year. \n" );
+            
+            ricevutaAcquisto.aggiornaAcquisto( dataAcquisto);
             ordiniErogati.add(ricevutaAcquisto);
         } else {
             for (int codice : mappaMetodoPagamento.keySet()) {
@@ -536,7 +541,6 @@ public class A4R {
     // L'utente ha scelto di visualizzare i veicoli in vendita
     public void opzione2() {
         int codiceV = 0;
-        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
         mostraNoleggia();
         System.out.println("Desideri filtrare la lista? (s/n)");
@@ -552,18 +556,59 @@ public class A4R {
         }
         System.out.println("Inserici il codice corrispondente al veicolo che hai scelto (0 per tornare indietro)");
         codiceV = input.nextInt();
+        System.out.println(codiceV);
         if (codiceV == 0) {
             System.err.println("Ritorno al menu' in corso...");
             return;
         }
         veicoloNoleggiabile = scegliVeicoloNoleggio(codiceV);
         System.out.println("Per quale data vuoi noleggiare il veicolo?");
+        
+       
         System.out.println("INIZIO periodo di noleggio nel formato dd-mm-yyyy:");
-        String inizio = input.nextLine();
-        System.out.println("FINE periodo di noleggio nel formato dd-mm-yyyy:");
-        String fine = input.nextLine();
+	
+
+        int giornoInizio;
+        int meseInizio;
+        int annoInizio;
+        int giornoFine;
+        int meseFine;
+        int annoFine;
+ 
+        System.out.println("Per quale data vuoi noleggiare il veicolo?");
+        System.out.println("Inserisci la data di INIZIO del noleggio:");
+        System.out.println("GIORNO: ");
+        giornoInizio = input.nextInt();
+        System.out.println("Hai inserito il giorno: " + giornoInizio);
+        System.out.println("MESE");
+        meseInizio = input.nextInt();
+        System.out.println("Hai inserito il mese: " + meseInizio);
+        System.out.println("ANNO");
+        annoInizio = input.nextInt();
+        System.out.println("Hai inserito l'anno: " + annoInizio);
+        inizio.set(annoInizio, meseInizio, giornoInizio);
+ 
+        System.out.println("Inserisci la data di FINE del noleggio:");
+        System.out.println("GIORNO: ");
+        giornoFine = input.nextInt();
+        System.out.println("Hai inserito il giorno: " + giornoFine);
+        System.out.println("MESE");
+        meseFine = input.nextInt();
+        System.out.println("Hai inserito il mese: " + meseFine);
+        System.out.println("ANNO");
+        annoFine = input.nextInt();
+        System.out.println("Hai inserito l'anno: " + annoFine);
+        fine.set(annoFine, meseFine, giornoFine);
+        System.out.println( fine.get(Calendar.DAY_OF_MONTH));
+        System.out.println( fine.get(Calendar.MONTH) );
+        System.out.println( fine.get(Calendar.YEAR) );
         try {
-            periodoNoleggio(LocalDate.parse(inizio, formato), LocalDate.parse(fine, formato));
+            if(inizio.after(fine))
+                System.err.println("ERRORE, inserimento invalido");
+
+            System.out.println("Data di inizio noleggio (gg/MM/yyyy): " + inizio.get(Calendar.DAY_OF_MONTH) + "/" + inizio.get(Calendar.MONTH) + "/" + inizio.get(Calendar.YEAR));
+            System.out.println("Data di fine noleggio (gg/MM/yyyy): " + fine.get(Calendar.DAY_OF_MONTH) + "/" + fine.get(Calendar.MONTH) + "/" + fine.get(Calendar.YEAR));
+
         }
         catch (IllegalArgumentException e) {
             System.out.println("Inserire la data in un formato valido: " + e);
@@ -781,4 +826,6 @@ public class A4R {
     public void setCounterFoto(int counterFoto) {
         this.counterFoto = counterFoto;
     }
+    
+
 }

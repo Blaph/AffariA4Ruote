@@ -8,7 +8,8 @@ package A4R;
  *
  * @author Phoenix
  */
-import java.time.LocalDate;
+
+import java.util.GregorianCalendar;
 
 public class Acquisto extends Ordine {
 
@@ -18,7 +19,7 @@ public class Acquisto extends Ordine {
         this.VPcorrente = VPcorrente;
     }
 
-    private LocalDate dataAcquisto;
+    private GregorianCalendar dataAcquisto;
     private Utente utente;
     private VeicoloPersonalizzato VPcorrente;
     private MetodoPagamentoAdapter metodoPagamentoAdapter;
@@ -87,7 +88,7 @@ public class Acquisto extends Ordine {
         return (prezzoBase + ((prezzoBase * IVA) / 100) + tasseDogane + commissioneA4R + commissionePagamento + costoSpedizione - ((prezzoBase * scontoPremium) / 100) - ((prezzoBase * scontoA4R) / 100) - ((prezzoBase * scontoConcessionario) / 100));
     }
 
-    public void aggiornaAcquisto(LocalDate dataAcquisto) {
+    public void aggiornaAcquisto(GregorianCalendar dataAcquisto) {
         this.dataAcquisto = dataAcquisto;
     }
     

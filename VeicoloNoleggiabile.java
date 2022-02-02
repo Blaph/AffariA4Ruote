@@ -15,6 +15,7 @@ public class VeicoloNoleggiabile extends VeicoloPersonalizzato {
 
     public VeicoloNoleggiabile(int codice, Concessionario concessionario, int prezzoBase, String produttore, String modello, int cilindrata, String tipoVeicolo,  HashMap<String, DescrizioneOptional> mappaDO, ArrayList<Foto> listaFoto) {
         super(codice, concessionario, prezzoBase, produttore, modello, cilindrata, tipoVeicolo, mappaDO, listaFoto);
+        this.C = concessionario;
     }
 
     private int prezzoGiornaliero;
@@ -113,14 +114,6 @@ public class VeicoloNoleggiabile extends VeicoloPersonalizzato {
 
     public void setListaFoto(ArrayList<Foto> listaFoto) {
         this.listaFoto = listaFoto;
-    }
-
-    public Concessionario getConcessionario() {
-        return concessionario;
-    }
-
-    public void setConcessionario(Concessionario concessionario) {
-        this.concessionario = concessionario;
     }
     
     public boolean getInNoleggio(){

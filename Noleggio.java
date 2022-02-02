@@ -8,7 +8,7 @@ package A4R;
  *
  * @author Phoenix
  */
-import java.time.LocalDate;
+import java.util.GregorianCalendar;
 
 public class Noleggio extends Ordine {
 
@@ -19,8 +19,8 @@ public class Noleggio extends Ordine {
         this.luogoRitiro = luogoRitiro;
     }
 
-    private LocalDate inizio;
-    private LocalDate fine;
+    private GregorianCalendar inizio;
+    private GregorianCalendar fine;
     private int durataNoleggio;
     private Utente utente;
     private Concessionario concessionario;
@@ -30,7 +30,7 @@ public class Noleggio extends Ordine {
     private int scontoConcessionario;
     private int prezzoBase;
 
-    public int calcolaDurata(LocalDate inizio, LocalDate fine) {
+    public int calcolaDurata(GregorianCalendar inizio, GregorianCalendar fine) {
         //Ritorna > 0 se fine è cronologicamente successivo a inizio
         return (fine.compareTo(inizio));
     }
@@ -41,7 +41,7 @@ public class Noleggio extends Ordine {
     }
 
     @Override
-    public void aggiornaAcquisto(LocalDate dataAcquisto) {
+    public void aggiornaAcquisto(GregorianCalendar dataAcquisto) {
     }
 
     @Override
@@ -50,7 +50,7 @@ public class Noleggio extends Ordine {
     }
 
     @Override
-    public float impostaOrdine(MetodoPagamento metodoPagamento) {
+    public float impostaOrdine(MetodoPagamentoAdapter metodoPagamentoAdapter) {
         scontoPremium = utente.getScontoPremium();
         prezzoGiornaliero = veicoloNoleggiabile.getPrezzoGiornaliero();
         scontoConcessionario = concessionario.getScontoConcessionario();
@@ -77,11 +77,11 @@ public class Noleggio extends Ordine {
      return prezzoGiornaliero;
     }
     //Getter/Setter
-    public LocalDate getInizio() {
+    public GregorianCalendar getInizio() {
         return inizio;
     }
 
-    public void setInizio(LocalDate inizio) {
+    public void setInizio(GregorianCalendar inizio) {
         this.inizio = inizio;
     }
     
@@ -121,11 +121,11 @@ public class Noleggio extends Ordine {
         return durataNoleggio;
     }
 
-    public LocalDate getFine() {
+    public GregorianCalendar getFine() {
         return fine;
     }
 
-    public void setFine(LocalDate fine) {
+    public void setFine(GregorianCalendar fine) {
         this.fine = fine;
     }
 
