@@ -20,9 +20,10 @@ public class UI {
 
         system.startup(P);
 
-        //Il menù viene stampato ogni volta che si torna indietro
+        //Il menu' viene stampato ogni volta che si torna indietro
         while(true){
-            // Menù di benvenuto
+            // Menu' di benvenuto
+            System.out.println("");
             System.out.println("  ______");
             System.out.println(" /|_||_\\`.__");
             System.out.println("(   _    _ _\\");
@@ -32,7 +33,7 @@ public class UI {
             System.out.println("2. Noleggia veicolo");
             System.out.println("3. Carica nuovo mezzo (devi prima autenticarti)");
             System.out.println("-----------------------------------------------");
-            System.out.println("Per favore, scegli l'attivita'  da eseguire: inserisci un numero.");
+            System.out.println("Per favore, scegli l'attivita' da eseguire: inserisci un numero.");
 
             // Casi d'uso
             int num = input.nextInt();

@@ -17,7 +17,7 @@ public class Parco {
     private HashMap<Integer, VeicoloNoleggiabile> mappaVeicoliNoleggiabili;
     private Veicolo veicolo;
     private VeicoloPersonalizzato VPcorrente;
-    private int counter = 0;
+    private int counter = 11;
     private Noleggio noleggio;
 
     private static Parco instance;
@@ -37,6 +37,7 @@ public class Parco {
     }
 
     public void mostraAcquista() {
+        System.out.println("___________________________________________________________________________________________________________________\n");
         for (int codice : mappaVeicoli.keySet()) {
             System.out.println("Codice: " + mappaVeicoli.get(codice).getCodice() + "   Produttore: " + mappaVeicoli.get(codice).getProduttore() + "   Modello: " + mappaVeicoli.get(codice).modello + "   Tipologia: " + mappaVeicoli.get(codice).getTipoVeicolo());
             System.out.println("___________________________________________________________________________________________________________________\n");
@@ -44,6 +45,7 @@ public class Parco {
     }
 
     public void mostraNoleggia() {
+        System.out.println("___________________________________________________________________________________________________________________\n");
         for (int codice : mappaVeicoliNoleggiabili.keySet()) {
             noleggio = mappaVeicoliNoleggiabili.get(codice).getNoleggio();
             //Stampa solo i veicoli che non sono ancora stati noleggiati
@@ -55,6 +57,7 @@ public class Parco {
     }
 
     public void filtraVeicoliAcquisto(String produttore, String modello, String tipoVeicolo) {
+        System.out.println("___________________________________________________________________________________________________________________\n");
         for (int codice : mappaVeicoli.keySet()) {
             if ((mappaVeicoli.get(codice).getProduttore()).equals(produttore) && (mappaVeicoli.get(codice).getModello()).equals(modello) && (mappaVeicoli.get(codice).getTipoVeicolo()).equals(tipoVeicolo)) {
                  System.out.println("Codice: " + mappaVeicoli.get(codice).getCodice() + "   Produttore: " + mappaVeicoli.get(codice).getProduttore() + "   Modello: " + mappaVeicoli.get(codice).modello + "   Tipologia: " + mappaVeicoli.get(codice).getTipoVeicolo());
@@ -64,6 +67,7 @@ public class Parco {
     }
 
     public void filtraVeicoliNoleggio(String produttore, String modello, String tipoVeicolo) {
+        System.out.println("___________________________________________________________________________________________________________________\n");
         for (int codice : mappaVeicoliNoleggiabili.keySet()) {
             //Se il veicolo non è stato noleggiato, esegui
             if (mappaVeicoliNoleggiabili.get(codice).getInNoleggio() == false) {
@@ -85,11 +89,11 @@ public class Parco {
 
     public void aggiungiOptional(String nomeOptional) {
         VPcorrente.aggiungiOptional(nomeOptional);
-
     }
 
     public VeicoloPersonalizzato creaVeicoloPersonalizzato(Veicolo veicolo) {
-        return VPcorrente = veicolo.creaVeicoloPersonalizzato();
+        VPcorrente = veicolo.creaVeicoloPersonalizzato();
+        return VPcorrente;
     }
 
     public void terminaPersonalizzazione(VeicoloPersonalizzato veicoloPersonalizzato) {
@@ -97,9 +101,13 @@ public class Parco {
     }
 
     public void caricaMezzo(Concessionario concessionario, int prezzoBase, String produttore, String modello, int cilindrata, String tipoVeicolo) {
-        counter++;
-        veicolo = new Veicolo(counter, concessionario, prezzoBase, produttore, modello, cilindrata, tipoVeicolo);
-        mappaVeicoli.put(counter, veicolo);
+        if(concessionario != null && prezzoBase>0 && produttore != " " && modello != " " && cilindrata>0 && tipoVeicolo != " " ){
+            counter++;
+            veicolo = new Veicolo(counter, concessionario, prezzoBase, produttore, modello, cilindrata, tipoVeicolo);
+            mappaVeicoli.put(counter, veicolo);
+            return;
+        }
+        System.err.println("INFORMAZIONI NON VALIDE");
     }
 
     public void aggiungiFoto(Foto foto) {
