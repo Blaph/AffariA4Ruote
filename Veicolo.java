@@ -49,8 +49,6 @@ public class Veicolo {
         listaFoto.add(foto);
     }
 
-
-
     // Getter/Setter
     public HashMap<String, DescrizioneOptional> getMappaDO() {
         return mappaDO;
@@ -146,11 +144,5 @@ public class Veicolo {
 
     public void setConcessionario(Concessionario concessionario) {
         this.concessionario = concessionario;
-    }
-    
-    public void mostraDescrizioniOptional() {
-        for (String nome : mappaDO.keySet()) {
-            System.out.println("Codice: " + nome + ", Optional: " + mappaDO.get(codice).getNome());
-        }
     }
 }
