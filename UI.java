@@ -22,8 +22,9 @@ public class UI {
         system.startup(P);
 
         //Il menu' viene stampato ogni volta che si torna indietro
+        int num;
         while (true) {
-            try{
+            try {
                 // Menu' di benvenuto
                 System.out.println("");
                 System.out.println("  ______");
@@ -31,14 +32,16 @@ public class UI {
                 System.out.println("(   _    _ _\\");
                 System.out.println("=`-(_)--(_)-'");
                 System.out.println("..::~~~ BENVENUTO SU 'AFFARI A 4 RUOTE' ~~~::..");
+                System.out.println("CIAO " + system.getUtente().getNome() + "! Bentornato.");
+                System.out.println("Sei il proprietario della concessionaria '" + system.getConcessionario().getNome() + "', presso '" + system.getConcessionario().getLuogo() + "'.");
                 System.out.println("1. Acquista un veicolo");
                 System.out.println("2. Noleggia veicolo");
-                System.out.println("3. Carica nuovo mezzo (devi prima autenticarti)");
+                System.out.println("3. Carica nuovo mezzo");
                 System.out.println("-----------------------------------------------");
                 System.out.println("Per favore, scegli l'attivita' da eseguire: inserisci un numero.");
 
                 // Casi d'uso
-                int num = input.nextInt();
+                num = input.nextInt();
                 switch (num) {
                     case 1:
                         system.opzione1();  // UC5 e UC11

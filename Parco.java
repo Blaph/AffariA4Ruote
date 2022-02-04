@@ -17,6 +17,7 @@ public class Parco {
     private HashMap<Integer, VeicoloNoleggiabile> mappaVeicoliNoleggiabili;
     private Veicolo veicolo;
     private VeicoloPersonalizzato VPcorrente;
+    private VeicoloNoleggiabile VNcorrente;
     private int counter = 1;
     private Noleggio noleggio;
 
@@ -112,17 +113,27 @@ public class Parco {
 
     public void caricaMezzo(Concessionario concessionario, int prezzoBase, String produttore, String modello, int cilindrata, String tipoVeicolo) {
         if (concessionario != null && prezzoBase > 0 && !produttore.equals("") && !modello.equals("") && cilindrata > 0 && !tipoVeicolo.equals("")) {
-            counter++;
             veicolo = new Veicolo(counter, concessionario, prezzoBase, produttore, modello, cilindrata, tipoVeicolo);
+            counter++;
             mappaVeicoli.put(counter, veicolo);
             return;
         }
         System.err.println("INFORMAZIONI NON VALIDE");
     }
 
+    public DescrizioneOptional caricaDescrizioneOptional(String nomeDO, int prezzoDO, String coloreDO){
+        return veicolo.caricaDescrizioneOptional(nomeDO, prezzoDO, coloreDO);
+    }
+
     public void aggiungiFoto(Foto foto) {
         veicolo.aggiungiFoto(foto);
     }
+
+    public VeicoloNoleggiabile creaVeicoloNoleggiabile(VeicoloPersonalizzato veicoloPersonalizzato) {
+        VNcorrente = veicoloPersonalizzato.creaVeicoloNoleggiabile();
+        return VNcorrente;
+    }
+
 
     // Getter/Setter
     public HashMap<Integer, VeicoloPersonalizzato> getMappaVeicoliPersonalizzati() {

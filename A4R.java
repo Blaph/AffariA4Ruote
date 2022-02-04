@@ -48,8 +48,8 @@ public class A4R {
     private int annoFine;
     private String luogoRitiro;
     private int counterFoto = 1;
-    private Veicolo V;
     private ArrayList<String> elencoLuoghi;
+    private DescrizioneOptional descrizioneOptional;
 
     private Scanner input;
 
@@ -84,20 +84,35 @@ public class A4R {
         Concessionario virauto = new Concessionario(2, "Virauto", "Catania", 10);
         Concessionario cundari = new Concessionario(3, "Cundari", "Piazza Roma", 30);
 
+        this.concessionario = virauto;
+
         // Veicoli
-        Veicolo panda = new Veicolo(1, mucarauto, 1000, "FIAT", "Panda", 1000, "Automobile");   // Veicolo base
-        Veicolo punto = new Veicolo(2, virauto, 1000, "FIAT", "Punto", 1300, "Automobile");   // Veicolo base
-        Veicolo modelX = new Veicolo(3, virauto, 1000, "Tesla", "Model X", 30000, "Automobile");   // Veicolo base
-        Veicolo f8 = new Veicolo(4, cundari, 1000, "Ferrari", "F8", 1000, "Automobile");   // Veicolo base
-        Veicolo tmax = new Veicolo(5, cundari, 1000, "Yamaha", "T-MAX", 1000, "Motoveicolo");   // Veicolo base
-        Veicolo zip = new Veicolo(6, virauto, 20, "Piaggio", "ZIP", 125, "Motoveicolo");
-        Veicolo scania = new Veicolo(7, mucarauto, 20, "IVECO", "Scania", 2000, "Automobile");
-        Veicolo ninja = new Veicolo(8, cundari, 2000, "Kawasaki", "Ninja", 600, "Motoveicolo");
-        Veicolo fiorino = new Veicolo(9, cundari, 1700, "FIAT", "Fiorino", 1200, "Automobile");
-        Veicolo a1 = new Veicolo(10, virauto, 5000, "Audi", "A1", 1600, "Automobile");
-        Veicolo ypsilon = new Veicolo(4, virauto, 7000, "Lancia", "Ypsilon", 1300, "Automobile");
-        Veicolo giulietta = new Veicolo(5, mucarauto, 9000, "Alpha-Romeo", "Giulietta", 2000, "Automobile");
-        Veicolo v7 = new Veicolo(6, mucarauto, 4000, "Moto-Guzzi", "V7", 700, "Motoveicolo");
+        Veicolo panda = new Veicolo(P.getCounter(), mucarauto, 1000, "FIAT", "Panda", 1000, "Automobile");   // Veicolo base
+        P.setCounter(P.getCounter() + 1);
+        Veicolo punto = new Veicolo(P.getCounter(), virauto, 1000, "FIAT", "Punto", 1300, "Automobile");   // Veicolo base
+        P.setCounter(P.getCounter() + 1);
+        Veicolo modelX = new Veicolo(P.getCounter(), virauto, 1000, "Tesla", "Model X", 30000, "Automobile");   // Veicolo base
+        P.setCounter(P.getCounter() + 1);
+        Veicolo f8 = new Veicolo(P.getCounter(), cundari, 1000, "Ferrari", "F8", 1000, "Automobile");   // Veicolo base
+        P.setCounter(P.getCounter() + 1);
+        Veicolo tmax = new Veicolo(P.getCounter(), cundari, 1000, "Yamaha", "T-MAX", 1000, "Motoveicolo");   // Veicolo base
+        P.setCounter(P.getCounter() + 1);
+        Veicolo zip = new Veicolo(P.getCounter(), virauto, 20, "Piaggio", "ZIP", 125, "Motoveicolo");
+        P.setCounter(P.getCounter() + 1);
+        Veicolo scania = new Veicolo(P.getCounter(), mucarauto, 20, "IVECO", "Scania", 2000, "Automobile");
+        P.setCounter(P.getCounter() + 1);
+        Veicolo ninja = new Veicolo(P.getCounter(), cundari, 2000, "Kawasaki", "Ninja", 600, "Motoveicolo");
+        P.setCounter(P.getCounter() + 1);
+        Veicolo fiorino = new Veicolo(P.getCounter(), cundari, 1700, "FIAT", "Fiorino", 1200, "Automobile");
+        P.setCounter(P.getCounter() + 1);
+        Veicolo a1 = new Veicolo(P.getCounter(), virauto, 5000, "Audi", "A1", 1600, "Automobile");
+        P.setCounter(P.getCounter() + 1);
+        Veicolo ypsilon = new Veicolo(P.getCounter(), virauto, 7000, "Lancia", "Ypsilon", 1300, "Automobile");
+        P.setCounter(P.getCounter() + 1);
+        Veicolo giulietta = new Veicolo(P.getCounter(), mucarauto, 9000, "Alpha-Romeo", "Giulietta", 2000, "Automobile");
+        P.setCounter(P.getCounter() + 1);
+        Veicolo v7 = new Veicolo(P.getCounter(), mucarauto, 4000, "Moto-Guzzi", "V7", 700, "Motoveicolo");
+        P.setCounter(P.getCounter() + 1);
 
         // Descrizioni optional
         DescrizioneOptional specchietti = new DescrizioneOptional("Specchietti", 20, "Rossi");
@@ -443,18 +458,24 @@ public class A4R {
     public void scegliPagamento(int codicePagamento) {
         System.out.println("scegliPagamento");
         metodoPagamentoAdapter = null;
-        if(codicePagamento>0 && codicePagamento<(getMappaMetodoPagamento().size() + 1) ){
+        if (codicePagamento > 0 && codicePagamento < (getMappaMetodoPagamento().size() + 1)) {
             metodoPagamentoAdapter = mappaMetodoPagamento.get(codicePagamento);
             System.out.println("Pagamento con: " + metodoPagamentoAdapter.getNome() + ", codice: " + metodoPagamentoAdapter.getCodice() + ", commissione: " + metodoPagamentoAdapter.getCommissioniPagamento());
             System.out.println("Metodo Pagamento Adapter: " + metodoPagamentoAdapter);
             System.out.println("ordineCorrente: " + ordineCorrente);
             setPrezzoFinale(ordineCorrente.impostaOrdine(metodoPagamentoAdapter));
-        }else{
+        } else {
             System.out.println("Codice non corretto");
         }
     }
 
     public void effettuaPagamentoAcquisto(float prezzoTotale) {
+        if (prezzoTotale > 0) {
+            esitoPagamento = metodoPagamentoAdapter.effettuaPagamento(prezzoTotale, ordineCorrente.getTipologiaOrdine());
+        } else {
+            System.out.println("Prezzo non corretto.");
+            return;
+        }
         esitoPagamento = metodoPagamentoAdapter.effettuaPagamento(prezzoTotale, ordineCorrente.tipologiaOrdine);
         if (esitoPagamento.equals("ok")) {
             LocalDate dataAcquisto = LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), LocalDate.now().getDayOfMonth());   // Crea una nuova data e la inizializza alla data odierna
@@ -470,6 +491,12 @@ public class A4R {
     }
 
     public void effettuaPagamentoNoleggio(float prezzoTotale) {
+        if (prezzoTotale > 0) {
+            esitoPagamento = metodoPagamentoAdapter.effettuaPagamento(prezzoTotale, ordineCorrente.getTipologiaOrdine());
+        } else {
+            System.out.println("Prezzo non corretto");
+            return;
+        }
         esitoPagamento = metodoPagamentoAdapter.effettuaPagamento(prezzoTotale, ordineCorrente.tipologiaOrdine);
         if (esitoPagamento.equals("OK")) {
             LocalDate dataNoleggio = LocalDate.now(ZoneId.systemDefault());   // Crea una nuova data e la inizializza alla data odierna
@@ -484,8 +511,16 @@ public class A4R {
         }
     }
 
-    public void caricaMezzo(int prezzoBase, String produttore, String modello, int cilindrata, String tipoVeicolo) {
+    public void caricaMezzo(Concessionario concessionario, int prezzoBase, String produttore, String modello, int cilindrata, String tipoVeicolo) {
         P.caricaMezzo(concessionario, prezzoBase, produttore, modello, cilindrata, tipoVeicolo);
+    }
+
+    public void mostraDescrizioniOptional() {
+        P.mostraDescrizioniOptional();
+    }
+
+    public DescrizioneOptional caricaDescrizioneOptional(String nomeDO, int prezzoDO, String coloreDO) {
+        return P.caricaDescrizioneOptional(nomeDO, prezzoDO, coloreDO);
     }
 
     public void caricaFoto(Foto foto) {
@@ -503,10 +538,6 @@ public class A4R {
 
     public String controllaFoto(Foto foto) {
         return "ok";
-    }
-
-    public void mostraDescrizioniOptional() {
-        P.mostraDescrizioniOptional();
     }
 
     // L'utente ha scelto di visualizzare i veicoli in vendita
@@ -778,19 +809,68 @@ public class A4R {
     }
 
     public void opzione3() {
-        System.out.println("Inserisci il prezzo base del veicolo:");
-        int prezzoBase = input.nextInt();
-        System.out.println("Inserisci il produttore del veicolo:");
-        String produttore = input.next();
-        System.out.println("Inserisci il modello del veicolo:");
-        String modello = input.next();
-        System.out.println("Inserisci la cilindrata del veicolo:");
-        int cilindrata = input.nextInt();
-        System.out.println("Inserisci il tipo del veicolo: (autoveicolo, motoveicolo)");
-        String tipoVeicolo = input.next();
-        caricaMezzo(prezzoBase, produttore, modello, cilindrata, tipoVeicolo);
 
-        ///////// gestire caricamento vuoto
+        // Caricamento veicolo
+        try {
+            System.out.println("Inserisci il prezzo base del veicolo:");
+            int prezzoBase = input.nextInt();
+            System.out.println("Inserisci il produttore del veicolo:");
+            if (input.hasNextLine()) // Se è rimasto qualcosa nel buffer, gettalo
+            {
+                input.nextLine();
+            }
+            String produttore = input.nextLine();
+            System.out.println("Inserisci il modello del veicolo:");
+            String modello = input.nextLine();
+            System.out.println("Inserisci la cilindrata del veicolo:");
+            int cilindrata = input.nextInt();
+            String tipoVeicolo;
+            do {
+                System.out.println("Inserisci il tipo del veicolo: (Automobile, Motoveicolo)");
+                tipoVeicolo = input.next();
+            } while (!tipoVeicolo.equals("Automobile") && !tipoVeicolo.equals("Motoveicolo"));
+            caricaMezzo(concessionario, prezzoBase, produttore, modello, cilindrata, tipoVeicolo);
+        } catch (IllegalArgumentException | InputMismatchException e) {
+            System.err.println("Inserisci dei valori validi!");
+            System.err.println("Ritorno al menu' in corso...");
+            return;
+        }
+
+        // Si desidera caricare degli optional?
+        String risposta;
+        do {
+            System.out.println("Desideri caricare degli optional? (s/n)");
+            risposta = input.next();    // Variabile usata per l'input letterale
+        } while (!risposta.equals("s") && !risposta.equals("S") && !risposta.equals("n") && !risposta.equals("N"));
+
+        // Inserimento optional
+        while (risposta.equals("s") || risposta.equals("S")) {
+            if (input.hasNextLine()) // Se è rimasto qualcosa nel buffer, gettalo
+            {
+                input.nextLine();
+            }
+            System.out.println("NOME: ");
+            String nomeDO = input.nextLine();
+            System.out.println("PREZZO: ");
+            int prezzoDO = input.nextInt();
+            System.out.println("COLORE: ");
+            if (input.hasNextLine()) // Se è rimasto qualcosa nel buffer, gettalo
+            {
+                input.nextLine();
+            }
+            String coloreDO = input.nextLine();
+            descrizioneOptional = caricaDescrizioneOptional(nomeDO, prezzoDO, coloreDO);
+            if (descrizioneOptional == null) // Se è stato lanciato un "NullPointerException", ritorna al menu'
+            {
+                return;
+            }
+            do {
+                System.out.println("Desideri caricare un altro optional? (s/n)");
+                risposta = input.next();    // Variabile usata per l'input letterale
+            } while (!risposta.equals("s") && !risposta.equals("S") && !risposta.equals("n") && !risposta.equals("N"));
+        }
+
+        // Caricamento foto
         System.out.println("Inserisci le foto del veicolo (max 4)");
         for (int i = 0; i < 4; i++) {
             System.out.println("Foto" + i);

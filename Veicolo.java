@@ -25,7 +25,6 @@ public class Veicolo {
         this.listaFoto = new ArrayList<>();
         mappaVeicoliPersonalizzati = new HashMap<>();
         mappaDO = new HashMap<>(); 
-        
     }
 
     protected int codice;
@@ -40,6 +39,7 @@ public class Veicolo {
     protected Concessionario concessionario;
     protected HashMap<String, DescrizioneOptional> mappaDO;
     private VeicoloPersonalizzato VP;
+    private DescrizioneOptional descrizioneOptional;
 
     public VeicoloPersonalizzato creaVeicoloPersonalizzato() {
         if(mappaDO != null && listaFoto != null){
@@ -47,6 +47,17 @@ public class Veicolo {
         }
         System.err.println("INFORMAZIONI NON VALIDE");
         return null;
+    }
+
+    public DescrizioneOptional caricaDescrizioneOptional(String nomeDO, int prezzoDO, String coloreDO){
+        try {
+            descrizioneOptional = new DescrizioneOptional(nomeDO, prezzoDO, coloreDO);
+            mappaDO.put(nomeDO, descrizioneOptional);
+        } catch (NullPointerException e) {
+            System.err.println("NOME NON VALIDO. Ritorno al menu' in corso...");
+            return null;
+        }
+        return descrizioneOptional;
     }
 
     public void aggiungiFoto(Foto foto) {

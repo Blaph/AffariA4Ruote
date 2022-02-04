@@ -17,6 +17,7 @@ public class Noleggio extends Ordine {
         this.utente = utente;
         this.veicoloNoleggiabile = veicoloNoleggiabile;
         this.luogoRitiro = luogoRitiro;
+        this.setTipologiaOrdine("Noleggio");
     }
 
     private LocalDate inizio;
@@ -94,6 +95,10 @@ public class Noleggio extends Ordine {
         return prezzoBase;
     }
 
+    public void setPrezzoBase(int prezzoBase) {
+        this.prezzoBase = prezzoBase;
+    }
+
     public int getIva() {
         return IVA;
     }
@@ -102,12 +107,16 @@ public class Noleggio extends Ordine {
         return commissionePagamento;
     }
 
+    public void setCommissionePagamento(float commissionePagamento) {
+        this.commissionePagamento = commissionePagamento;
+    }
+
     public int getPrezzoGiornaliero() {
         return prezzoGiornaliero;
     }
 
-    public float getCostoSpedizione() {
-        return costoSpedizione;
+    public void setPrezzoGiornaliero(int prezzoGiornaliero) {
+        this.prezzoGiornaliero = prezzoGiornaliero;
     }
 
     public int getScontoPremium() {
@@ -116,6 +125,10 @@ public class Noleggio extends Ordine {
 
     public int getScontoA4R() {
         return scontoA4R;
+    }
+
+    public void setScontoA4R(int scontoA4R) {
+        this.scontoA4R = scontoA4R;
     }
 
     public int getScontoConcessionario() {
@@ -142,14 +155,6 @@ public class Noleggio extends Ordine {
         this.utente = utente;
     }
 
-    public String getTipologiaOrdine() {
-        return tipologiaOrdine;
-    }
-
-    public void setTipologiaOrdine(String tipologiaOrdine) {
-        this.tipologiaOrdine = tipologiaOrdine;
-    }
-
     public String getLuogoRitiro() {
         return luogoRitiro;
     }
@@ -166,16 +171,12 @@ public class Noleggio extends Ordine {
         this.tasseDogane = tasseDogane;
     }
 
-    public void setCommissionePagamento(float commissionePagamento) {
-        this.commissionePagamento = commissionePagamento;
+    public float getCostoSpedizione() {
+        return costoSpedizione;
     }
 
     public void setCostoSpedizione(float costoSpedizione) {
         this.costoSpedizione = costoSpedizione;
-    }
-
-    public void setScontoA4R(int scontoA4R) {
-        this.scontoA4R = scontoA4R;
     }
 
     public float getPrezzoFinale() {

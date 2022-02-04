@@ -17,6 +17,7 @@ public class Acquisto extends Ordine {
         super();
         this.utente = utente;
         this.VPcorrente = VPcorrente;
+        this.setTipologiaOrdine("Acquisto");
     }
 
     private LocalDate dataAcquisto;
@@ -135,5 +136,10 @@ public class Acquisto extends Ordine {
     public int getPrezzoOptional(){
         return prezzoOptional;
     }
+
+    public LocalDate getDataAcquisto() {
+        return dataAcquisto;
+    }
+
     
 }

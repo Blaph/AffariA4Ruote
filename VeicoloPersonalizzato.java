@@ -55,6 +55,15 @@ public class VeicoloPersonalizzato extends Veicolo {
         return concessionario.getScontoConcessionario();
     }
 
+    public VeicoloNoleggiabile creaVeicoloNoleggiabile(){
+        if(mappaDO != null && listaFoto != null){
+            return new VeicoloNoleggiabile(codice, concessionario, prezzoBase, produttore, modello, cilindrata, tipoVeicolo, mappaDO, listaFoto, 0);
+        }
+        System.err.println("INFORMAZIONI NON VALIDE");
+        return null;
+    }
+
+
 // Getter/Setter
     public int getPrezzoOptional() {
         return prezzoOptional;
