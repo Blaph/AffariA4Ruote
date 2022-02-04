@@ -6,8 +6,9 @@ package A4R;
 
 import java.util.HashMap;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -36,8 +37,8 @@ public class A4R {
     private String esitoPagamento;
     private float prezzoFinale;
     private int durataNoleggio;
-    private GregorianCalendar inizio = new GregorianCalendar();
-    private GregorianCalendar fine = new GregorianCalendar();
+    private LocalDate inizio;
+    private LocalDate fine;
     private int giornoInizio;
     private int meseInizio;
     private int annoInizio;
@@ -67,6 +68,8 @@ public class A4R {
     public void startup(Parco P) {
         this.P = P;
         input = new Scanner(System.in);
+        inizio = LocalDate.now(ZoneId.systemDefault());
+        fine = LocalDate.now(ZoneId.systemDefault());
 
         // Utenti
         Utente riccardo = new Utente(1, "Riccardo", "Castorina", "Via Zafferana Milo", 0, false);
@@ -208,7 +211,7 @@ public class A4R {
         mappaConcessionari.put(cundari.getCodice(), cundari);
 
         //MetodiPagamento
-        MetodoPagamentoAdapter contoCorrente = new MetodoPagamentoAdapter("ContoCorrente", 2, 5);
+        MetodoPagamentoAdapter contoCorrente = new MetodoPagamentoAdapter("ContoCorrente", 2, 3);
         MetodoPagamentoAdapter payPal = new MetodoPagamentoAdapter("PayPal", 1, 5);
 
         //Salvataggio MetodoPagamento
@@ -284,7 +287,8 @@ public class A4R {
         v7.getListaFoto().add(f2);
         v7.getListaFoto().add(f3);
         v7.getListaFoto().add(f4);
-//VeicoloPersonalizzato(int codice, Concessionario concessionario, int prezzoBase, String produttore, String modello, int cilindrata, String tipoVeicolo, HashMap<String, DescrizioneOptional> mappaDO, ArrayList<Foto> listaFoto)
+
+//VeicoloPersonalizzato(int codice, Concessionario concessionario, int prezzoBase, String produttore, String modello, int cilindrata, String tipoVeicolo, HashMap<String, DescrizioneOptional> mappaDO, ArrayList<Foto> listaFoto, int prezzoGiornaliero)
         VeicoloPersonalizzato zipP = new VeicoloPersonalizzato(1, virauto, 20, "Piaggio", "ZIP", 125, "Motoveicolo", zip.getMappaDO(), zip.getListaFoto());    // Veicolo personalizzato
         VeicoloPersonalizzato scaniaP = new VeicoloPersonalizzato(2, mucarauto, 20, "IVECO", "Scania", 2000, "Automobile", scania.getMappaDO(), scania.getListaFoto());    // Veicolo personalizzato
         VeicoloPersonalizzato ninjaP = new VeicoloPersonalizzato(1, cundari, 2000, "Kawasaki", "Ninja", 600, "Motoveicolo", ninja.getMappaDO(), ninja.getListaFoto()); // Veicolo noleggiabile
@@ -294,12 +298,12 @@ public class A4R {
         VeicoloPersonalizzato giuliettaP = new VeicoloPersonalizzato(5, mucarauto, 9000, "Alpha-Romeo", "Giulietta", 2000, "Automobile", giulietta.getMappaDO(), giulietta.getListaFoto()); // Veicolo noleggiabile
         VeicoloPersonalizzato v7P = new VeicoloPersonalizzato(6, mucarauto, 4000, "Moto-Guzzi", "V7", 700, "Motoveicolo", v7.getMappaDO(), v7.getListaFoto()); // Veicolo noleggiabile
 
-        VeicoloNoleggiabile ninjaN = new VeicoloNoleggiabile(1, cundari, 2000, "Kawasaki", "Ninja", 600, "Motoveicolo", ninja.getMappaDO(), ninja.getListaFoto()); // Veicolo noleggiabile
-        VeicoloNoleggiabile fiorinoN = new VeicoloNoleggiabile(2, cundari, 1700, "FIAT", "Fiorino", 1200, "Automobile", fiorino.getMappaDO(), fiorino.getListaFoto()); // Veicolo noleggiabile (già noleggiato)
-        VeicoloNoleggiabile a1N = new VeicoloNoleggiabile(3, virauto, 5000, "Audi", "A1", 1600, "Automobile", a1.getMappaDO(), a1.getListaFoto()); // Veicolo noleggiabile
-        VeicoloNoleggiabile ypsilonN = new VeicoloNoleggiabile(4, virauto, 7000, "Lancia", "Ypsilon", 1300, "Automobile", ypsilon.getMappaDO(), ypsilon.getListaFoto()); // Veicolo noleggiabile
-        VeicoloNoleggiabile giuliettaN = new VeicoloNoleggiabile(5, mucarauto, 9000, "Alpha-Romeo", "Giulietta", 2000, "Automobile", giulietta.getMappaDO(), giulietta.getListaFoto()); // Veicolo noleggiabile
-        VeicoloNoleggiabile v7N = new VeicoloNoleggiabile(6, mucarauto, 4000, "Moto-Guzzi", "V7", 700, "Motoveicolo", v7.getMappaDO(), v7.getListaFoto()); // Veicolo noleggiabile
+        VeicoloNoleggiabile ninjaN = new VeicoloNoleggiabile(1, cundari, 2000, "Kawasaki", "Ninja", 600, "Motoveicolo", ninja.getMappaDO(), ninja.getListaFoto(), 20); // Veicolo noleggiabile
+        VeicoloNoleggiabile fiorinoN = new VeicoloNoleggiabile(2, cundari, 1700, "FIAT", "Fiorino", 1200, "Automobile", fiorino.getMappaDO(), fiorino.getListaFoto(), 3); // Veicolo noleggiabile (già noleggiato)
+        VeicoloNoleggiabile a1N = new VeicoloNoleggiabile(3, virauto, 5000, "Audi", "A1", 1600, "Automobile", a1.getMappaDO(), a1.getListaFoto(), 10); // Veicolo noleggiabile
+        VeicoloNoleggiabile ypsilonN = new VeicoloNoleggiabile(4, virauto, 7000, "Lancia", "Ypsilon", 1300, "Automobile", ypsilon.getMappaDO(), ypsilon.getListaFoto(), 5); // Veicolo noleggiabile
+        VeicoloNoleggiabile giuliettaN = new VeicoloNoleggiabile(5, mucarauto, 9000, "Alpha-Romeo", "Giulietta", 2000, "Automobile", giulietta.getMappaDO(), giulietta.getListaFoto(), 12); // Veicolo noleggiabile
+        VeicoloNoleggiabile v7N = new VeicoloNoleggiabile(6, mucarauto, 4000, "Moto-Guzzi", "V7", 700, "Motoveicolo", v7.getMappaDO(), v7.getListaFoto(), 18); // Veicolo noleggiabile
 
         //Optional su VeicoloPersonalizzato
         zipP.getListaOptional().add(marmittaNuovaOP);
@@ -359,8 +363,6 @@ public class A4R {
         ordiniErogati.add(noleggioFiorino);
         fiorino.setNoleggio(noleggioFiorino);
 
-        // Inserimento veicoli
-        //P = P.getInstance();
         // Inserimento luoghi disponibili per il ritiro
         elencoLuoghi = new ArrayList<>();
         elencoLuoghi.add("Catania");
@@ -389,9 +391,7 @@ public class A4R {
         try {
             VPcorrente = P.creaVeicoloPersonalizzato(veicolo);
         } catch (NullPointerException | InputMismatchException e) {
-            System.err.println("!!!!!");
             System.err.println("NUMERO NON VALIDO. Ritorno al menu' in corso...");
-            System.err.println("!!!!!");
             return null;
         }
         ricevutaAcquisto = new Acquisto(utente, VPcorrente);
@@ -404,12 +404,11 @@ public class A4R {
         try {
             luogoRitiro = veicoloNoleggiabile.recuperaLuogo();
         } catch (NullPointerException | InputMismatchException e) {
-            System.err.println("!!!!!");
             System.err.println("NUMERO NON VALIDO. Ritorno al menu' in corso...");
-            System.err.println("!!!!!");
             return null;
         }
         ricevutaNoleggio = new Noleggio(utente, veicoloNoleggiabile, luogoRitiro);
+        ricevutaNoleggio.setConcessionario(veicoloNoleggiabile.getConcessionario());
         ordineCorrente = ricevutaNoleggio;
         return veicoloNoleggiabile;
     }
@@ -431,7 +430,7 @@ public class A4R {
         }
     }
 
-    public void periodoNoleggio(GregorianCalendar inizio, GregorianCalendar fine) {
+    public void periodoNoleggio(LocalDate inizio, LocalDate fine) {
         ricevutaNoleggio.setInizio(inizio);
         ricevutaNoleggio.setFine(fine);
         durataNoleggio = ricevutaNoleggio.calcolaDurata(inizio, fine);
@@ -449,9 +448,9 @@ public class A4R {
     public void effettuaPagamentoAcquisto(float prezzoTotale) {
         esitoPagamento = metodoPagamentoAdapter.effettuaPagamento(prezzoTotale, ordineCorrente.tipologiaOrdine);
         if (esitoPagamento.equals("ok")) {
-            GregorianCalendar dataAcquisto = new GregorianCalendar();   // Crea una nuova data e la inizializza alla data odierna
+            LocalDate dataAcquisto = LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), LocalDate.now().getDayOfMonth());   // Crea una nuova data e la inizializza alla data odierna
             System.out.println("Data acquisto: ");
-            System.out.println(dataAcquisto.get(Calendar.DAY_OF_MONTH) + "/" + (dataAcquisto.get(Calendar.MONTH) + 1) + "/" + dataAcquisto.get(Calendar.YEAR));
+            System.out.println(dataAcquisto.getDayOfMonth() + "/" + dataAcquisto.getMonthValue() + "/" + dataAcquisto.getYear());
             ricevutaAcquisto.aggiornaAcquisto(dataAcquisto);
             ordiniErogati.add(ricevutaAcquisto);
         } else {
@@ -463,10 +462,10 @@ public class A4R {
 
     public void effettuaPagamentoNoleggio(float prezzoTotale) {
         esitoPagamento = metodoPagamentoAdapter.effettuaPagamento(prezzoTotale, ordineCorrente.tipologiaOrdine);
-        if (esitoPagamento.equals("ok")) {
-            GregorianCalendar dataNoleggio = new GregorianCalendar();   // Crea una nuova data e la inizializza alla data odierna
+        if (esitoPagamento.equals("OK")) {
+            LocalDate dataNoleggio = LocalDate.now(ZoneId.systemDefault());   // Crea una nuova data e la inizializza alla data odierna
             System.out.println("Data noleggio: ");
-            System.out.println(dataNoleggio.get(Calendar.DAY_OF_MONTH) + "/" + (dataNoleggio.get(Calendar.MONTH) + 1) + "/" + dataNoleggio.get(Calendar.YEAR));
+            System.out.println(dataNoleggio.getDayOfMonth() + "/" + dataNoleggio.getMonthValue() + "/" + dataNoleggio.getYear());
             veicoloNoleggiabile.setNoleggio(ricevutaNoleggio);
             ordiniErogati.add(ricevutaNoleggio);
         } else {
@@ -657,62 +656,74 @@ public class A4R {
         }
 
         // Scegli data noleggio
-        // INIZIO noleggio
-        System.out.println("Per quale data vuoi noleggiare il veicolo?");
-        System.out.println("Inserisci la data di INIZIO del noleggio (gg/MM/aaaa):");
-        System.out.println("GIORNO: ");
-        try {
-            giornoInizio = input.nextInt();
-            System.out.println("Hai inserito il giorno: " + giornoInizio);
-            System.out.println("MESE");
-            meseInizio = input.nextInt();
-            System.out.println("Hai inserito il mese: " + meseInizio);
-            System.out.println("ANNO");
-            annoInizio = input.nextInt();
-            System.out.println("Hai inserito l'anno: " + annoInizio);
-            inizio.set(annoInizio, meseInizio, giornoInizio);
-            System.out.println(inizio.get(Calendar.DAY_OF_MONTH));
-            System.out.println(inizio.get(Calendar.MONTH));
-            System.out.println(inizio.get(Calendar.YEAR));
-        } catch (InputMismatchException e) {
-            System.err.println("Per favore, inserisci dei valori validi!");
-            System.err.println("Ritorno al menu' in corso...");
-            return;
-        }
-        // FINE noleggio
-        try {
-            System.out.println("Inserisci la data di FINE del noleggio (gg/MM/aaaa):");
-            System.out.println("GIORNO: ");
-            giornoFine = input.nextInt();
-            System.out.println("Hai inserito il giorno: " + giornoFine);
-            System.out.println("MESE");
-            meseFine = input.nextInt();
-            System.out.println("Hai inserito il mese: " + meseFine);
-            System.out.println("ANNO");
-            annoFine = input.nextInt();
-            System.out.println("Hai inserito l'anno: " + annoFine);
-            fine.set(annoFine, meseFine, giornoFine);
-            System.out.println(fine.get(Calendar.DAY_OF_MONTH));
-            System.out.println(fine.get(Calendar.MONTH));
-            System.out.println(fine.get(Calendar.YEAR));
-        } catch (InputMismatchException | IllegalArgumentException e) {
-            System.err.println("Per favore, inserisci dei valori validi!");
-            System.err.println("Ritorno al menu' in corso...");
-            return;
-        }
-        try {   // Verifica che la data di fine noleggio sia successiva a quella di inizio e che i giorni di noleggio siano almeno 2
-            if (inizio.after(fine)) {
-                System.err.println("ERRORE, inserimento non valido.");
+        do {
+            // INIZIO noleggio
+            System.out.println("Per quale data vuoi noleggiare il veicolo? (Minimo 2 giorni, es 1/1/2023 -> 2/1/2023)");
+            System.out.println("Inserisci la data di INIZIO del noleggio (gg/MM/aaaa):");
+            try {
+                do {
+                    System.out.println("GIORNO [1-31]");
+                    giornoInizio = input.nextInt();
+                } while (giornoInizio < 1 || giornoInizio > 31);
+                do {
+                    System.out.println("MESE [1-12]");
+                    meseInizio = input.nextInt();
+                } while (meseInizio < 1 || meseInizio > 12);
+                do {
+                    System.out.println("ANNO (dal 2023 in poi)");
+                    annoInizio = input.nextInt();
+                } while (annoInizio < 2023);
+                inizio = LocalDate.of(annoInizio, meseInizio, giornoInizio);
+                System.out.println("Data inizio: " + inizio.getDayOfMonth() + "/" + inizio.getMonthValue() + "/" + inizio.getYear());
+            } catch (InputMismatchException e) {
+                System.err.println("Per favore, inserisci dei valori validi!");
                 System.err.println("Ritorno al menu' in corso...");
                 return;
             }
-            System.out.println("Data di inizio noleggio (gg/MM/yyyy): " + inizio.get(Calendar.DAY_OF_MONTH) + "/" + (inizio.get(Calendar.MONTH) - 1) + "/" + (inizio.get(Calendar.YEAR) - 1));
-            System.out.println("Data di fine noleggio (gg/MM/yyyy): " + fine.get(Calendar.DAY_OF_MONTH) + "/" + fine.get(Calendar.MONTH) + "/" + fine.get(Calendar.YEAR));
 
-        } catch (IllegalArgumentException e) {
-            System.err.println("Inserire la data in un formato valido.");
-            System.err.println("Ritorno al menu' in corso...");
-            return;
+            // FINE noleggio
+            try {
+                System.out.println("Inserisci la data di FINE del noleggio (gg/MM/aaaa):");
+                do {
+                    System.out.println("GIORNO [1-31]");
+                    giornoFine = input.nextInt();
+                } while (giornoFine < 1 || giornoFine > 31);
+                do {
+                    System.out.println("MESE [1-12]");
+                    meseFine = input.nextInt();
+                } while (meseFine < 1 || meseFine > 12);
+                do {
+                    System.out.println("ANNO (dal 2023 in poi)");
+                    annoFine = input.nextInt();
+                } while (annoFine < 2023);
+                fine = LocalDate.of(annoFine, meseFine, giornoFine);
+                System.out.println("Data fine: " + fine.getDayOfMonth() + "/" + fine.getMonthValue() + "/" + fine.getYear());
+            } catch (InputMismatchException | IllegalArgumentException e) {
+                System.err.println("Per favore, inserisci dei valori validi!");
+                System.err.println("Ritorno al menu' in corso...");
+                return;
+            }
+            try {
+                if (inizio.isAfter(fine) || inizio.isEqual(fine)) {
+                    System.err.println("ERRORE: inserisci un intervallo di date valido.");
+                    System.err.println("Ritorno al menu' in corso...");
+                    return;
+                }
+                System.out.println("Data di inizio noleggio (gg/MM/yyyy): " + inizio.getDayOfMonth() + "/" + inizio.getMonthValue() + "/" + inizio.getYear());
+                System.out.println("Data di fine noleggio (gg/MM/yyyy): " + fine.getDayOfMonth() + "/" + fine.getMonthValue() + "/" + fine.getYear());
+            } catch (IllegalArgumentException e) {
+                System.err.println("Inserire la data in un formato valido.");
+                System.err.println("Ritorno al menu' in corso...");
+                return;
+            }
+            if (Period.between(inizio, fine).getDays() < 2 && Period.between(inizio, fine).getMonths() == 0 && Period.between(inizio, fine).getYears() == 0) {
+                System.err.println("La durata minima del noleggio è di 2 giorni!");
+            }
+        } while (Period.between(inizio, fine).getDays() < 2 && Period.between(inizio, fine).getMonths() == 0 && Period.between(inizio, fine).getYears() == 0);
+
+        //Mostra una lista di metodi di pagamento disponibili
+        for (int codice : mappaMetodoPagamento.keySet()) {
+            System.out.println("Codice: " + mappaMetodoPagamento.get(codice).getCodice() + ", Nome: " + mappaMetodoPagamento.get(codice).getNome());
         }
 
         // Scegli pagamento
@@ -752,7 +763,7 @@ public class A4R {
         System.out.println(utente.getNome() + "! GRAZIE PER AVER NOLEGGIATO CON NOI!");
         System.out.println("---- Riepilogo del noleggio ----");
         System.out.println("Prezzo finale: " + prezzoFinale);
-        System.out.println("Veicolo: " + veicoloNoleggiabile);
+        System.out.println("Veicolo: " + veicoloNoleggiabile.getProduttore() + " " + veicoloNoleggiabile.getModello());
         System.out.println("Email inviata.");
         System.out.println("Ritorno al menu' in corso...");
     }

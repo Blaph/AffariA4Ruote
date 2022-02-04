@@ -29,9 +29,13 @@ public class VeicoloPersonalizzato extends Veicolo {
 
     // Stampa elenco degli optional
     public void mostraDescrizioniOptional() {
+        boolean found = false;
         for (String nome : mappaDO.keySet()) {
             System.out.println("Codice: " + nome);
+            found = true;
         }
+        if(found == false)
+            System.out.println("Nessun optional trovato.");
     }
 
     public void aggiungiOptional(String nomeOptional) {

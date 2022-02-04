@@ -42,7 +42,11 @@ public class Veicolo {
     private VeicoloPersonalizzato VP;
 
     public VeicoloPersonalizzato creaVeicoloPersonalizzato() {
-        return new VeicoloPersonalizzato(codice, concessionario, prezzoBase, produttore, modello, cilindrata, tipoVeicolo, mappaDO, listaFoto);
+        if(mappaDO != null && listaFoto != null){
+          return new VeicoloPersonalizzato(codice, concessionario, prezzoBase, produttore, modello, cilindrata, tipoVeicolo, mappaDO, listaFoto);
+        }
+        System.err.println("INFORMAZIONI NON VALIDE");
+        return null;
     }
 
     public void aggiungiFoto(Foto foto) {
