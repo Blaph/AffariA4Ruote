@@ -111,14 +111,15 @@ public class Parco {
         mappaVeicoliPersonalizzati.put(veicoloPersonalizzato.getCodice(), veicoloPersonalizzato);
     }
 
-    public void caricaMezzo(Concessionario concessionario, int prezzoBase, String produttore, String modello, int cilindrata, String tipoVeicolo) {
+    public Veicolo caricaMezzo(Concessionario concessionario, int prezzoBase, String produttore, String modello, int cilindrata, String tipoVeicolo) {
         if (concessionario != null && prezzoBase > 0 && !produttore.equals("") && !modello.equals("") && cilindrata > 0 && !tipoVeicolo.equals("")) {
             veicolo = new Veicolo(counter, concessionario, prezzoBase, produttore, modello, cilindrata, tipoVeicolo);
-            counter++;
             mappaVeicoli.put(counter, veicolo);
-            return;
+            counter++;
+            return veicolo;
         }
         System.err.println("INFORMAZIONI NON VALIDE");
+        return null;
     }
 
     public DescrizioneOptional caricaDescrizioneOptional(String nomeDO, int prezzoDO, String coloreDO){

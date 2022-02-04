@@ -9,6 +9,7 @@ package A4R;
  * @author Phoenix
  */
 import java.time.LocalDate;
+import java.time.Period;
 
 public class Noleggio extends Ordine {
 
@@ -33,7 +34,7 @@ public class Noleggio extends Ordine {
 
     public int calcolaDurata(LocalDate inizio, LocalDate fine) {
         //Ritorna > 0 se fine è cronologicamente successivo a inizio
-        return (fine.compareTo(inizio));
+        return (Period.between(inizio, fine).getDays());
     }
 
     public float calcoloTotaleNoleggio(int prezzoGiornaliero, int durataNoleggio, int IVA, int commissioneA4R, float commissionePagamento, int scontoPremium, int scontoA4R, int scontoConcessionario) {

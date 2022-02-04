@@ -57,6 +57,10 @@ public class UI {
                 }
             } catch (InputMismatchException e) {
                 System.err.println("ERRORE: numero non riconosciuto.");
+                if (input.hasNextLine()) // Se è rimasto qualcosa nel buffer, gettalo
+                {
+                    input.nextLine();
+                }
             }
         }
     }

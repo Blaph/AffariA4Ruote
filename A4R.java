@@ -25,6 +25,7 @@ public class A4R {
     private HashMap<Integer, Utente> mappaUtenti;
     private HashMap<Integer, Concessionario> mappaConcessionari;
     private Veicolo veicolo;
+    private Veicolo veicoloCorrente;
     private VeicoloPersonalizzato VPcorrente;
     private VeicoloNoleggiabile veicoloNoleggiabile;
     private MetodoPagamentoAdapter metodoPagamentoAdapter;
@@ -512,7 +513,11 @@ public class A4R {
     }
 
     public void caricaMezzo(Concessionario concessionario, int prezzoBase, String produttore, String modello, int cilindrata, String tipoVeicolo) {
-        P.caricaMezzo(concessionario, prezzoBase, produttore, modello, cilindrata, tipoVeicolo);
+        try {
+            veicoloCorrente = P.caricaMezzo(concessionario, prezzoBase, produttore, modello, cilindrata, tipoVeicolo);
+        } catch (NullPointerException e) {
+            System.err.println("Errore! Ritorno al menu' in corso...");
+        }
     }
 
     public void mostraDescrizioniOptional() {
@@ -830,9 +835,16 @@ public class A4R {
                 tipoVeicolo = input.next();
             } while (!tipoVeicolo.equals("Automobile") && !tipoVeicolo.equals("Motoveicolo"));
             caricaMezzo(concessionario, prezzoBase, produttore, modello, cilindrata, tipoVeicolo);
-        } catch (IllegalArgumentException | InputMismatchException e) {
+            if (veicoloCorrente == null) {  // Eccezione gestita in A4R#caricaMezzo: se non è stato possibile creare un veicolo, si torna al menu' iniziale.
+                return;
+            }
+        } catch (IllegalArgumentException | InputMismatchException | NullPointerException e) {
             System.err.println("Inserisci dei valori validi!");
             System.err.println("Ritorno al menu' in corso...");
+            if (input.hasNextLine()) // Se è rimasto qualcosa nel buffer, gettalo
+            {
+                input.nextLine();
+            }
             return;
         }
 
@@ -843,31 +855,44 @@ public class A4R {
             risposta = input.next();    // Variabile usata per l'input letterale
         } while (!risposta.equals("s") && !risposta.equals("S") && !risposta.equals("n") && !risposta.equals("N"));
 
+        if (risposta.equals("n") || risposta.equals("N")) {
+            descrizioneOptional = caricaDescrizioneOptional("Niente", 0, "(Nessun optional disponibile per questo veicolo.)");
+        }
+
         // Inserimento optional
         while (risposta.equals("s") || risposta.equals("S")) {
-            if (input.hasNextLine()) // Se è rimasto qualcosa nel buffer, gettalo
-            {
-                input.nextLine();
-            }
-            System.out.println("NOME: ");
-            String nomeDO = input.nextLine();
-            System.out.println("PREZZO: ");
-            int prezzoDO = input.nextInt();
-            System.out.println("COLORE: ");
-            if (input.hasNextLine()) // Se è rimasto qualcosa nel buffer, gettalo
-            {
-                input.nextLine();
-            }
-            String coloreDO = input.nextLine();
-            descrizioneOptional = caricaDescrizioneOptional(nomeDO, prezzoDO, coloreDO);
-            if (descrizioneOptional == null) // Se è stato lanciato un "NullPointerException", ritorna al menu'
-            {
+            try {
+                if (input.hasNextLine()) // Se è rimasto qualcosa nel buffer, gettalo
+                {
+                    input.nextLine();
+                }
+                System.out.println("NOME: ");
+                String nomeDO = input.nextLine();
+                System.out.println("PREZZO: ");
+                int prezzoDO = input.nextInt();
+                System.out.println("COLORE: ");
+                if (input.hasNextLine()) // Se è rimasto qualcosa nel buffer, gettalo
+                {
+                    input.nextLine();
+                }
+                String coloreDO = input.nextLine();
+                descrizioneOptional = caricaDescrizioneOptional(nomeDO, prezzoDO, coloreDO);
+                if (descrizioneOptional == null) // Se è stato lanciato un "NullPointerException", ritorna al menu'
+                {
+                    return;
+                }
+                do {
+                    System.out.println("Desideri caricare un altro optional? (s/n)");
+                    risposta = input.next();    // Variabile usata per l'input letterale
+                } while (!risposta.equals("s") && !risposta.equals("S") && !risposta.equals("n") && !risposta.equals("N"));
+            } catch (IllegalArgumentException | InputMismatchException | NullPointerException e) {
+                System.err.println("Non hai inserito correttamente dei valori. Ritorno al menu' in corso...");
+                if (input.hasNextLine()) // Se è rimasto qualcosa nel buffer, gettalo
+                {
+                    input.nextLine();
+                }
                 return;
             }
-            do {
-                System.out.println("Desideri caricare un altro optional? (s/n)");
-                risposta = input.next();    // Variabile usata per l'input letterale
-            } while (!risposta.equals("s") && !risposta.equals("S") && !risposta.equals("n") && !risposta.equals("N"));
         }
 
         // Caricamento foto
