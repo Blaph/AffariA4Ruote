@@ -4,6 +4,7 @@
  */
 package A4R;
 
+import java.time.DateTimeException;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.time.LocalDate;
@@ -683,7 +684,7 @@ public class A4R {
                 } while (annoInizio < 2023);
                 inizio = LocalDate.of(annoInizio, meseInizio, giornoInizio);
                 System.out.println("Data inizio: " + inizio.getDayOfMonth() + "/" + inizio.getMonthValue() + "/" + inizio.getYear());
-            } catch (InputMismatchException e) {
+            } catch (InputMismatchException | IllegalArgumentException | DateTimeException e) {
                 System.err.println("Per favore, inserisci dei valori validi!");
                 System.err.println("Ritorno al menu' in corso...");
                 return;
@@ -706,7 +707,7 @@ public class A4R {
                 } while (annoFine < 2023);
                 fine = LocalDate.of(annoFine, meseFine, giornoFine);
                 System.out.println("Data fine: " + fine.getDayOfMonth() + "/" + fine.getMonthValue() + "/" + fine.getYear());
-            } catch (InputMismatchException | IllegalArgumentException e) {
+            } catch (InputMismatchException | IllegalArgumentException | DateTimeException e) {
                 System.err.println("Per favore, inserisci dei valori validi!");
                 System.err.println("Ritorno al menu' in corso...");
                 return;
