@@ -440,9 +440,17 @@ public class A4R {
     }
 
     public void scegliPagamento(int codicePagamento) {
-        metodoPagamentoAdapter = mappaMetodoPagamento.get(codicePagamento);
-        System.out.println("Pagamento con: " + metodoPagamentoAdapter.getNome() + ", codice: " + metodoPagamentoAdapter.getCodice() + ", commissione: " + metodoPagamentoAdapter.getCommissioniPagamento());
-        setPrezzoFinale(ordineCorrente.impostaOrdine(metodoPagamentoAdapter));
+        System.out.println("scegliPagamento");
+        metodoPagamentoAdapter = null;
+        if(codicePagamento>0 && codicePagamento<(getMappaMetodoPagamento().size() + 1) ){
+            metodoPagamentoAdapter = mappaMetodoPagamento.get(codicePagamento);
+            System.out.println("Pagamento con: " + metodoPagamentoAdapter.getNome() + ", codice: " + metodoPagamentoAdapter.getCodice() + ", commissione: " + metodoPagamentoAdapter.getCommissioniPagamento());
+            System.out.println("Metodo Pagamento Adapter: " + metodoPagamentoAdapter);
+            System.out.println("ordineCorrente: " + ordineCorrente);
+            setPrezzoFinale(ordineCorrente.impostaOrdine(metodoPagamentoAdapter));
+        }else{
+            System.out.println("Codice non corretto");
+        }
     }
 
     public void effettuaPagamentoAcquisto(float prezzoTotale) {
