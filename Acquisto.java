@@ -9,7 +9,7 @@ package A4R;
  * @author Phoenix
  */
 
-import java.util.GregorianCalendar;
+import java.time.LocalDate;
 
 public class Acquisto extends Ordine {
 
@@ -17,9 +17,10 @@ public class Acquisto extends Ordine {
         super();
         this.utente = utente;
         this.VPcorrente = VPcorrente;
+        this.setTipologiaOrdine("Acquisto");
     }
 
-    private GregorianCalendar dataAcquisto;
+    private LocalDate dataAcquisto;
     private Utente utente;
     private VeicoloPersonalizzato VPcorrente;
     private MetodoPagamentoAdapter metodoPagamentoAdapter;
@@ -46,6 +47,7 @@ public class Acquisto extends Ordine {
         aggiornaTasseDogane(luogoRitiro);
     }
 
+    @Override
     public void aggiornaTasseDogane(String luogoRitiro) {
         switch (luogoRitiro) {
             case "Catania":
@@ -65,6 +67,7 @@ public class Acquisto extends Ordine {
         }
     }
 
+    @Override
     public void aggiornaCostoSpedizione(String luogoRitiro) {
         switch (luogoRitiro) {
             case "Catania":
@@ -84,11 +87,13 @@ public class Acquisto extends Ordine {
         }
     }
 
+    @Override
     public float calcoloTotaleAcquisto(int prezzoBase, int IVA, float tasseDogane, int commissioneA4R, float commissionePagamento, float costoSpedizione, int scontoPremium, int scontoA4R, int scontoConcessionario, int prezzoOptional) {
         return (prezzoBase + ((prezzoBase * IVA) / 100) + tasseDogane + commissioneA4R + commissionePagamento + costoSpedizione - ((prezzoBase * scontoPremium) / 100) - ((prezzoBase * scontoA4R) / 100) - ((prezzoBase * scontoConcessionario) / 100));
     }
 
-    public void aggiornaAcquisto(GregorianCalendar dataAcquisto) {
+    @Override
+    public void aggiornaAcquisto(LocalDate dataAcquisto) {
         this.dataAcquisto = dataAcquisto;
     }
     
@@ -131,5 +136,10 @@ public class Acquisto extends Ordine {
     public int getPrezzoOptional(){
         return prezzoOptional;
     }
+
+    public LocalDate getDataAcquisto() {
+        return dataAcquisto;
+    }
+
     
 }

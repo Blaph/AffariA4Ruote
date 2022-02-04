@@ -29,9 +29,13 @@ public class VeicoloPersonalizzato extends Veicolo {
 
     // Stampa elenco degli optional
     public void mostraDescrizioniOptional() {
+        boolean found = false;
         for (String nome : mappaDO.keySet()) {
             System.out.println("Codice: " + nome);
+            found = true;
         }
+        if(found == false)
+            System.out.println("Nessun optional trovato.");
     }
 
     public void aggiungiOptional(String nomeOptional) {
@@ -50,6 +54,15 @@ public class VeicoloPersonalizzato extends Veicolo {
     public int recuperaScontoConcessionario() {
         return concessionario.getScontoConcessionario();
     }
+
+    public VeicoloNoleggiabile creaVeicoloNoleggiabile(){
+        if(mappaDO != null && listaFoto != null){
+            return new VeicoloNoleggiabile(codice, concessionario, prezzoBase, produttore, modello, cilindrata, tipoVeicolo, mappaDO, listaFoto, 0);
+        }
+        System.err.println("INFORMAZIONI NON VALIDE");
+        return null;
+    }
+
 
 // Getter/Setter
     public int getPrezzoOptional() {

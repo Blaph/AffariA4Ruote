@@ -9,7 +9,7 @@ package A4R;
  * @author Phoenix
  */
 
-import java.util.GregorianCalendar;
+import java.time.LocalDate;
 
 public abstract class Ordine {
 
@@ -29,5 +29,13 @@ public abstract class Ordine {
     public abstract void aggiornaTasseDogane(String luogoRitiro);
     public abstract void aggiornaCostoSpedizione(String luogoRitiro);
     public abstract float calcoloTotaleAcquisto(int prezzoBase, int IVA, float tasseDogane, int commissioneA4R, float commissionePagamento, float costoSpedizione, int scontoPremium, int scontoA4R, int scontoconcessionario, int prezzoOptional);
-    public abstract void aggiornaAcquisto(GregorianCalendar dataAcquisto);
+    public abstract void aggiornaAcquisto(LocalDate dataAcquisto);
+
+    public String getTipologiaOrdine(){
+        return tipologiaOrdine;
+    }
+
+    public void setTipologiaOrdine (String tipologiaOrdine){
+        this.tipologiaOrdine = tipologiaOrdine;
+    }
 }

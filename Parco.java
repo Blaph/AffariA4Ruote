@@ -17,13 +17,14 @@ public class Parco {
     private HashMap<Integer, VeicoloNoleggiabile> mappaVeicoliNoleggiabili;
     private Veicolo veicolo;
     private VeicoloPersonalizzato VPcorrente;
-    private int counter = 0;
+    private VeicoloNoleggiabile VNcorrente;
+    private int counter = 1;
     private Noleggio noleggio;
 
     private static Parco instance;
 
     private Parco() {
-        mappaVeicoli = new  HashMap<>();
+        mappaVeicoli = new HashMap<>();
         mappaVeicoliPersonalizzati = new HashMap<>();
         mappaVeicoliNoleggiabili = new HashMap<>();
     }
@@ -50,32 +51,42 @@ public class Parco {
             noleggio = mappaVeicoliNoleggiabili.get(codice).getNoleggio();
             //Stampa solo i veicoli che non sono ancora stati noleggiati
             if (noleggio == null) {
-                System.out.println(mappaVeicoliNoleggiabili.get(codice).getCodice( ) + "   Produttore: " + mappaVeicoliNoleggiabili.get(codice).getProduttore() + "   Modello: " +mappaVeicoliNoleggiabili.get(codice).modello + "   Tipologia: " + mappaVeicoliNoleggiabili.get(codice).getTipoVeicolo());
+                System.out.println(mappaVeicoliNoleggiabili.get(codice).getCodice() + "   Produttore: " + mappaVeicoliNoleggiabili.get(codice).getProduttore() + "   Modello: " + mappaVeicoliNoleggiabili.get(codice).modello + "   Tipologia: " + mappaVeicoliNoleggiabili.get(codice).getTipoVeicolo());
                 System.out.println("___________________________________________________________________________________________________________________\n");
             }
         }
     }
 
     public void filtraVeicoliAcquisto(String produttore, String modello, String tipoVeicolo) {
+        boolean found = false;
         System.out.println("___________________________________________________________________________________________________________________\n");
         for (int codice : mappaVeicoli.keySet()) {
             if ((mappaVeicoli.get(codice).getProduttore()).equals(produttore) && (mappaVeicoli.get(codice).getModello()).equals(modello) && (mappaVeicoli.get(codice).getTipoVeicolo()).equals(tipoVeicolo)) {
-                 System.out.println("Codice: " + mappaVeicoli.get(codice).getCodice() + "   Produttore: " + mappaVeicoli.get(codice).getProduttore() + "   Modello: " + mappaVeicoli.get(codice).modello + "   Tipologia: " + mappaVeicoli.get(codice).getTipoVeicolo());
-                 System.out.println("___________________________________________________________________________________________________________________\n");
+                System.out.println("Codice: " + mappaVeicoli.get(codice).getCodice() + "   Produttore: " + mappaVeicoli.get(codice).getProduttore() + "   Modello: " + mappaVeicoli.get(codice).modello + "   Tipologia: " + mappaVeicoli.get(codice).getTipoVeicolo());
+                System.out.println("___________________________________________________________________________________________________________________\n");
+                found = true;
             }
+        }
+        if (found == false) {
+            System.out.println("Nessun veicolo trovato.");
         }
     }
 
     public void filtraVeicoliNoleggio(String produttore, String modello, String tipoVeicolo) {
+        boolean found = false;
         System.out.println("___________________________________________________________________________________________________________________\n");
         for (int codice : mappaVeicoliNoleggiabili.keySet()) {
             //Se il veicolo non è stato noleggiato, esegui
             if (mappaVeicoliNoleggiabili.get(codice).getInNoleggio() == false) {
                 if ((mappaVeicoliNoleggiabili.get(codice).getProduttore()).equals(produttore) && (mappaVeicoliNoleggiabili.get(codice).getModello()).equals(modello) && (mappaVeicoliNoleggiabili.get(codice).getTipoVeicolo()).equals(tipoVeicolo)) {
                     System.out.println("Codice: " + mappaVeicoliNoleggiabili.get(codice).getCodice() + "   Produttore: " + mappaVeicoliNoleggiabili.get(codice).getProduttore() + "   Modello: " + mappaVeicoliNoleggiabili.get(codice).modello + "   Tipologia: " + mappaVeicoliNoleggiabili.get(codice).getTipoVeicolo());
-                 System.out.println("___________________________________________________________________________________________________________________\n");
+                    System.out.println("___________________________________________________________________________________________________________________\n");
+                    found = true;
                 }
             }
+        }
+        if (found == false) {
+            System.out.println("Nessun veicolo trovato.");
         }
     }
 
@@ -97,22 +108,33 @@ public class Parco {
     }
 
     public void terminaPersonalizzazione(VeicoloPersonalizzato veicoloPersonalizzato) {
-        mappaVeicoliPersonalizzati.put(counter, veicoloPersonalizzato);
+        mappaVeicoliPersonalizzati.put(veicoloPersonalizzato.getCodice(), veicoloPersonalizzato);
     }
 
-    public void caricaMezzo(Concessionario concessionario, int prezzoBase, String produttore, String modello, int cilindrata, String tipoVeicolo) {
-        if(concessionario != null && prezzoBase>0 && !produttore.equals("") && !modello.equals("") && cilindrata>0 && !tipoVeicolo.equals("")){
-            counter++;
+    public Veicolo caricaMezzo(Concessionario concessionario, int prezzoBase, String produttore, String modello, int cilindrata, String tipoVeicolo) {
+        if (concessionario != null && prezzoBase > 0 && !produttore.equals("") && !modello.equals("") && cilindrata > 0 && !tipoVeicolo.equals("")) {
             veicolo = new Veicolo(counter, concessionario, prezzoBase, produttore, modello, cilindrata, tipoVeicolo);
             mappaVeicoli.put(counter, veicolo);
-            return;
+            counter++;
+            return veicolo;
         }
         System.err.println("INFORMAZIONI NON VALIDE");
+        return null;
+    }
+
+    public DescrizioneOptional caricaDescrizioneOptional(String nomeDO, int prezzoDO, String coloreDO){
+        return veicolo.caricaDescrizioneOptional(nomeDO, prezzoDO, coloreDO);
     }
 
     public void aggiungiFoto(Foto foto) {
         veicolo.aggiungiFoto(foto);
     }
+
+    public VeicoloNoleggiabile creaVeicoloNoleggiabile(VeicoloPersonalizzato veicoloPersonalizzato) {
+        VNcorrente = veicoloPersonalizzato.creaVeicoloNoleggiabile();
+        return VNcorrente;
+    }
+
 
     // Getter/Setter
     public HashMap<Integer, VeicoloPersonalizzato> getMappaVeicoliPersonalizzati() {

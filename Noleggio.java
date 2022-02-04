@@ -8,7 +8,8 @@ package A4R;
  *
  * @author Phoenix
  */
-import java.util.GregorianCalendar;
+import java.time.LocalDate;
+import java.time.Period;
 
 public class Noleggio extends Ordine {
 
@@ -17,10 +18,11 @@ public class Noleggio extends Ordine {
         this.utente = utente;
         this.veicoloNoleggiabile = veicoloNoleggiabile;
         this.luogoRitiro = luogoRitiro;
+        this.setTipologiaOrdine("Noleggio");
     }
 
-    private GregorianCalendar inizio;
-    private GregorianCalendar fine;
+    private LocalDate inizio;
+    private LocalDate fine;
     private int durataNoleggio;
     private Utente utente;
     private Concessionario concessionario;
@@ -30,9 +32,9 @@ public class Noleggio extends Ordine {
     private int scontoConcessionario;
     private int prezzoBase;
 
-    public int calcolaDurata(GregorianCalendar inizio, GregorianCalendar fine) {
+    public int calcolaDurata(LocalDate inizio, LocalDate fine) {
         //Ritorna > 0 se fine è cronologicamente successivo a inizio
-        return (fine.compareTo(inizio));
+        return (Period.between(inizio, fine).getDays());
     }
 
     public float calcoloTotaleNoleggio(int prezzoGiornaliero, int durataNoleggio, int IVA, int commissioneA4R, float commissionePagamento, int scontoPremium, int scontoA4R, int scontoConcessionario) {
@@ -41,7 +43,7 @@ public class Noleggio extends Ordine {
     }
 
     @Override
-    public void aggiornaAcquisto(GregorianCalendar dataAcquisto) {
+    public void aggiornaAcquisto(LocalDate dataAcquisto) {
     }
 
     @Override
@@ -72,61 +74,74 @@ public class Noleggio extends Ordine {
     public void scegliLuogoRitiro(String luogoRitiro) {
         this.luogoRitiro = luogoRitiro;
     }
-    
-    public int getPrezzoGiornaliero(){
-     return prezzoGiornaliero;
-    }
+
     //Getter/Setter
-    public GregorianCalendar getInizio() {
+    public LocalDate getInizio() {
         return inizio;
     }
 
-    public void setInizio(GregorianCalendar inizio) {
+    public void setInizio(LocalDate inizio) {
         this.inizio = inizio;
     }
-    
-    public int getPrezzoBase(){
-        return prezzoBase;
-    }
-    
-    public int getIva(){
-        return IVA;
-    }
-    
-     public float getCommissionePagamento(){
-    return commissionePagamento;
-    }
 
-    public float getCostoSpedizione(){
-        return costoSpedizione;
-    }
-    
-    public int getScontoPremium(){
-        return scontoPremium;
-    }
-    
-        public int getScontoA4R(){
-        return scontoA4R;
-    }
-
-    public int getScontoConcessionario(){
-        return scontoConcessionario;
-    }
-  
-    public int getCommissioneA4R(){
-        return commissioneA4R;
-    }
-    
-    public int getDurataNoleggio(){
-        return durataNoleggio;
-    }
-
-    public GregorianCalendar getFine() {
+    public LocalDate getFine() {
         return fine;
     }
 
-    public void setFine(GregorianCalendar fine) {
+    public void setFine(LocalDate fine) {
         this.fine = fine;
+    }
+
+    public int getPrezzoBase() {
+        return prezzoBase;
+    }
+
+    public void setPrezzoBase(int prezzoBase) {
+        this.prezzoBase = prezzoBase;
+    }
+
+    public int getIva() {
+        return IVA;
+    }
+
+    public float getCommissionePagamento() {
+        return commissionePagamento;
+    }
+
+    public void setCommissionePagamento(float commissionePagamento) {
+        this.commissionePagamento = commissionePagamento;
+    }
+
+    public int getPrezzoGiornaliero() {
+        return prezzoGiornaliero;
+    }
+
+    public void setPrezzoGiornaliero(int prezzoGiornaliero) {
+        this.prezzoGiornaliero = prezzoGiornaliero;
+    }
+
+    public int getScontoPremium() {
+        return scontoPremium;
+    }
+
+    public int getScontoA4R() {
+        return scontoA4R;
+    }
+
+    public void setScontoA4R(int scontoA4R) {
+        this.scontoA4R = scontoA4R;
+    }
+
+    public int getScontoConcessionario() {
+        return scontoConcessionario;
+    }
+
+    public int getCommissioneA4R() {
+        return commissioneA4R;
+    }
+
+    public int getDurataNoleggio() {
+        return durataNoleggio;
     }
 
     public void setDurataNoleggio(int durataNoleggio) {
@@ -139,14 +154,6 @@ public class Noleggio extends Ordine {
 
     public void setUtente(Utente utente) {
         this.utente = utente;
-    }
-
-    public String getTipologiaOrdine() {
-        return tipologiaOrdine;
-    }
-
-    public void setTipologiaOrdine(String tipologiaOrdine) {
-        this.tipologiaOrdine = tipologiaOrdine;
     }
 
     public String getLuogoRitiro() {
@@ -165,22 +172,12 @@ public class Noleggio extends Ordine {
         this.tasseDogane = tasseDogane;
     }
 
-
-
-    public void setCommissionePagamento(float commissionePagamento) {
-        this.commissionePagamento = commissionePagamento;
+    public float getCostoSpedizione() {
+        return costoSpedizione;
     }
-
-
 
     public void setCostoSpedizione(float costoSpedizione) {
         this.costoSpedizione = costoSpedizione;
-    }
-
-
-
-    public void setScontoA4R(int scontoA4R) {
-        this.scontoA4R = scontoA4R;
     }
 
     public float getPrezzoFinale() {
@@ -197,5 +194,13 @@ public class Noleggio extends Ordine {
 
     public void setVeicoloNoleggiabile(VeicoloNoleggiabile veicoloNoleggiabile) {
         this.veicoloNoleggiabile = veicoloNoleggiabile;
+    }
+
+    public Concessionario getConcessionario() {
+        return concessionario;
+    }
+
+    public void setConcessionario(Concessionario concessionario) {
+        this.concessionario = concessionario;
     }
 }
