@@ -89,7 +89,7 @@ public class A4RIT {
        System.out.println("\n");
     }
     
-    /*
+    
     
     @Test
     public void testEffettuaPagamentoAcquisto() {
@@ -101,25 +101,27 @@ public class A4RIT {
         a4r.scegliVeicoloAcquisto(1);
         a4r.scegliPagamento(1);
        
+        //effettuo un acquisto con un prezzo lecito
         a4r.effettuaPagamentoAcquisto(a4r.getPrezzoFinale());
         Acquisto acquisto = a4r.getRicevutaAcquisto();
-        
-      
-        System.out.println("a4r.getPrezzoFinale()" + a4r.getPrezzoFinale());
-        System.out.println("a4r.getRicevutaAcquisto())" + a4r.getRicevutaAcquisto());
-        //problema nell'inserimento della data in effettua pagamento
-        System.out.println("a4r.getRicevutaAcquisto().getDataAcquisto());" + a4r.getRicevutaAcquisto().getDataAcquisto());
-        System.out.println("a4r.getOrdiniErogati()" + a4r.getOrdiniErogati());
-                
+
+        //controllo che l'ordine sisa stato aggiunto alla lista degli ordine erogati
         assertEquals(2, a4r.getOrdiniErogati().size());
+        //controllo che l'acquisto che ho pagato è quello inserito per ultimo nella lista
         assertEquals(acquisto, a4r.getOrdiniErogati().get(1));
         
+        //cerco di pagare un acquisto uguale a 0
         a4r.effettuaPagamentoAcquisto(0);
         assertEquals(2, a4r.getOrdiniErogati().size());
+        
+        //cerco di pagare un acquisto uguale a -1
+        a4r.effettuaPagamentoAcquisto(-1);
+        assertEquals(2, a4r.getOrdiniErogati().size());
+        
        System.out.println("\n");
     }
-    */
-    /*
+    
+    
         @Test
     public void testScegliVeicoloNoleggio() {
         System.out.println("testScegliVeicoloNoleggio");
@@ -153,7 +155,7 @@ public class A4RIT {
         org.junit.Assert.assertNull(VPnegativo);
         System.out.println("\n");
     }
-    */
+    
         @Test
     public void testEffettuaPagamentoNoleggio() {
         System.out.println("testEffettuaPagamentoNoleggio");
