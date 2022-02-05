@@ -51,8 +51,12 @@ public class Veicolo {
 
     public DescrizioneOptional caricaDescrizioneOptional(String nomeDO, int prezzoDO, String coloreDO){
         try {
-            descrizioneOptional = new DescrizioneOptional(nomeDO, prezzoDO, coloreDO);
-            mappaDO.put(nomeDO, descrizioneOptional);
+            if( !nomeDO.equals("") && prezzoDO>0 && !coloreDO.equals("")){
+                descrizioneOptional = new DescrizioneOptional(nomeDO, prezzoDO, coloreDO);
+                mappaDO.put(nomeDO, descrizioneOptional);
+            }else{
+                System.out.println("Descrizione Optional non valida");
+            }
         } catch (NullPointerException e) {
             System.err.println("NOME NON VALIDO. Ritorno al menu' in corso...");
             return null;

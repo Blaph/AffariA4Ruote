@@ -477,8 +477,7 @@ public class A4R {
             System.out.println("Prezzo non corretto.");
             return;
         }
-        esitoPagamento = metodoPagamentoAdapter.effettuaPagamento(prezzoTotale, ordineCorrente.tipologiaOrdine);
-        if (esitoPagamento.equals("ok")) {
+        if (esitoPagamento.equals("OK")) {
             LocalDate dataAcquisto = LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), LocalDate.now().getDayOfMonth());   // Crea una nuova data e la inizializza alla data odierna
             System.out.println("Data acquisto: ");
             System.out.println(dataAcquisto.getDayOfMonth() + "/" + dataAcquisto.getMonthValue() + "/" + dataAcquisto.getYear());
@@ -498,7 +497,6 @@ public class A4R {
             System.out.println("Prezzo non corretto");
             return;
         }
-        esitoPagamento = metodoPagamentoAdapter.effettuaPagamento(prezzoTotale, ordineCorrente.tipologiaOrdine);
         if (esitoPagamento.equals("OK")) {
             LocalDate dataNoleggio = LocalDate.now(ZoneId.systemDefault());   // Crea una nuova data e la inizializza alla data odierna
             System.out.println("Data noleggio: ");
