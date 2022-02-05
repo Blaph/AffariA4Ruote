@@ -5,23 +5,17 @@
  */
 package a4r;
 
-import A4R.Concessionario;
 import A4R.Parco;
 import A4R.A4R;
 import A4R.Acquisto;
 import A4R.Noleggio;
-import A4R.Foto;
-import A4R.Veicolo;
 import A4R.VeicoloNoleggiabile;
-import A4R.DescrizioneOptional;
-import A4R.MetodoPagamentoAdapter;
-import A4R.Utente;
 import A4R.VeicoloPersonalizzato;
-import java.time.LocalDate;
-import java.time.Month;
-import java.util.HashMap;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 
 /**
  *
@@ -31,44 +25,51 @@ public class A4RIT {
     
     public A4RIT() {
     }
+
     
-    
-    
-    @Test
-    public void testScegliVeicoloAcquisto() {
-        System.out.println("testScegliVeicoloAcquisto");
+    @BeforeAll
+    public static void beforeEachTest(){
+        //con startup vengono creati 10 veicoli base 
         A4R a4r = A4R.getInstance();
-        Parco P = Parco.getInstance();
-        
-        //con starup vengono creati 10 veioli base 
-        a4r.startup(P);
-
-       //scegli Veicolo per l'acquisto con il codice corretto (da 1 a 26)
-        VeicoloPersonalizzato VP1 = a4r.scegliVeicoloAcquisto(1);
-        org.junit.Assert.assertNotNull(VP1);
-        
-        //scegli Veicolo per l'acquisto con il codice uguale a 11, NON corretto 
-        VeicoloPersonalizzato VP11 = a4r.scegliVeicoloAcquisto(27);
-        org.junit.Assert.assertNull(VP11);
-        
-        //scegli Veicolo per l'acquisto con il codice uguale a 0, NON corretto 
-        VeicoloPersonalizzato VP1000 = a4r.scegliVeicoloAcquisto(0);
-        org.junit.Assert.assertNull(VP1000);
-        
-        //scegli Veicolo per l'acquisto con il codice uguale a -1, NON corretto 
-        VeicoloPersonalizzato VPnegativo = a4r.scegliVeicoloAcquisto(-1);
-        org.junit.Assert.assertNull(VPnegativo);
-        System.out.println("\n");
-
+        Parco p = Parco.getInstance();
+        a4r.startup(p);
     }
     
     @Test
-    public void testScegliPagamento() {
-        System.out.println("testScegliPagamento");
+    @DisplayName("Test su scegli veicolo - Acquisto")
+    public void testScegliVeicoloAcquisto() {
         A4R a4r = A4R.getInstance();
-        Parco P = Parco.getInstance();
+        Parco p = Parco.getInstance();
+        System.out.println("testScegliVeicoloAcquisto");
+
+       //scegli Veicolo per l'acquisto con il codice corretto (da 1 a 26)
+        VeicoloPersonalizzato VP1 = a4r.scegliVeicoloAcquisto(1);
+        assertNotNull(VP1);
         
-        a4r.startup(P);
+        //scegli Veicolo per l'acquisto con il codice uguale a 13 
+        VeicoloPersonalizzato VP13 = a4r.scegliVeicoloAcquisto(13);
+        assertNotNull(VP13);
+        
+        //scegli Veicolo per l'acquisto con il codice uguale a 14 
+        VeicoloPersonalizzato VP14 = a4r.scegliVeicoloAcquisto(14);
+        assertNull(VP14);
+        
+        //scegli Veicolo per l'acquisto con il codice uguale a 0, NON corretto 
+        VeicoloPersonalizzato VP1000 = a4r.scegliVeicoloAcquisto(0);
+        assertNull(VP1000);
+        
+        //scegli Veicolo per l'acquisto con il codice uguale a -1, NON corretto 
+        VeicoloPersonalizzato VPnegativo = a4r.scegliVeicoloAcquisto(-1);
+        assertNull(VPnegativo);
+        System.out.println("\n");
+    }
+    
+    @Test
+    @DisplayName("Test su scegli pagamento")
+    public void testScegliPagamento() {
+        A4R a4r = A4R.getInstance();
+        Parco p = Parco.getInstance();
+        System.out.println("testScegliPagamento");
 
         a4r.scegliVeicoloAcquisto(1);
         
@@ -78,26 +79,25 @@ public class A4RIT {
         //se metodoPagamentto con codice 1 è uguale al MetodoPagamentoAdapter attuale allora è stato impostato correttamente
         assertEquals(a4r.getMappaMetodoPagamento().get(1),a4r.getMetodoPagamentoAdapter());
         
-       //Passo un metodo pagamento NON corretto
-       a4r.scegliPagamento(-1);
-       assertNull(a4r.getMetodoPagamentoAdapter());
+        //Passo un metodo pagamento NON corretto
+        a4r.scegliPagamento(-1);
+        assertNull(a4r.getMetodoPagamentoAdapter());
        
-       //Passo un metodo pagamento NON corretto
-       a4r.scegliPagamento(0);
-       assertNull(a4r.getMetodoPagamentoAdapter());
+        //Passo un metodo pagamento NON corretto
+        a4r.scegliPagamento(0);
+        assertNull(a4r.getMetodoPagamentoAdapter());
 
-       System.out.println("\n");
+        System.out.println("\n");
     }
     
     
     
     @Test
+    @DisplayName("Test su effettua pagamento - Acquisto")
     public void testEffettuaPagamentoAcquisto() {
-        System.out.println("testEffettuaPagamentoAcquisto");
         A4R a4r = A4R.getInstance();
-        Parco P = Parco.getInstance();
-
-        a4r.startup(P);
+        Parco p = Parco.getInstance();
+        System.out.println("testEffettuaPagamentoAcquisto");
         a4r.scegliVeicoloAcquisto(1);
         a4r.scegliPagamento(1);
        
@@ -122,75 +122,70 @@ public class A4RIT {
     }
     
     
-        @Test
+    @Test
+    @DisplayName("Test su scegli veicolo  - Noleggio")
     public void testScegliVeicoloNoleggio() {
-        System.out.println("testScegliVeicoloNoleggio");
         A4R a4r = A4R.getInstance();
-        Parco P = Parco.getInstance();
+        Parco p = Parco.getInstance();
+        System.out.println("testScegliVeicoloNoleggio");
         
-        //con starup vengono creati 10 veioli base, 8 personalizzati e 6 noleggiabili
-        a4r.startup(P);
-        
-        System.out.println("VEICOLI NOLEGGIABILI:   --->" + P.getMappaVeicoliNoleggiabili());
+        System.out.println("VEICOLI NOLEGGIABILI:   --->" + p.getMappaVeicoliNoleggiabili());
         
        //scegli Veicolo per l'acquisto con il codice corretto (da 1 a 10)
         VeicoloPersonalizzato VP1 = a4r.scegliVeicoloNoleggio(1);
-        org.junit.Assert.assertNotNull(VP1);
+        assertNotNull(VP1);
         
         //scegli Veicolo per il noleggio con il codice corretto (da 1 a 6)
         VeicoloPersonalizzato VP6 = a4r.scegliVeicoloNoleggio(6);
         System.out.println( VP6);
-        org.junit.Assert.assertNotNull(VP6);
+        assertNotNull(VP6);
        
         //scegli Veicolo per il noleggio con il codice uguale a 7, NON corretto 
-        VeicoloPersonalizzato VP7 = P.getMappaVeicoliNoleggiabili().get(7);
-        org.junit.Assert.assertNull(VP7);
+        VeicoloPersonalizzato VP7 = p.getMappaVeicoliNoleggiabili().get(7);
+        assertNull(VP7);
      
         //scegli Veicolo per  il noleggio con il codice uguale a 0, NON corretto 
-        VeicoloPersonalizzato VP1000 =P.getMappaVeicoliNoleggiabili().get(0);
-        org.junit.Assert.assertNull(VP1000);
+        VeicoloPersonalizzato VP1000 = p.getMappaVeicoliNoleggiabili().get(0);
+        assertNull(VP1000);
         
         //scegli Veicolo per  il noleggio con il codice uguale a -1, NON corretto 
-        VeicoloPersonalizzato VPnegativo = P.getMappaVeicoliNoleggiabili().get(-1);
-        org.junit.Assert.assertNull(VPnegativo);
+        VeicoloPersonalizzato VPnegativo = p.getMappaVeicoliNoleggiabili().get(-1);
+        assertNull(VPnegativo);
         System.out.println("\n");
     }
     
-        @Test
+    @Test
+    @DisplayName("Test su effettua pagamento - Noleggio")
     public void testEffettuaPagamentoNoleggio() {
-        System.out.println("testEffettuaPagamentoNoleggio");
         A4R a4r = A4R.getInstance();
-        Parco P = Parco.getInstance();
+        Parco p = Parco.getInstance();
+        System.out.println("testEffettuaPagamentoNoleggio");
 
-        a4r.startup(P);
-
-       // VN.setPrezzoGiornaliero(100);
-      // LocalDate dataInizio =  LocalDate.of(2023, 3, 12);
-      // LocalDate dataFine =  LocalDate.of(2023, 4, 16);
+        // VN.setPrezzoGiornaliero(100);
+        // LocalDate dataInizio =  LocalDate.of(2023, 3, 12);
+        // LocalDate dataFine =  LocalDate.of(2023, 4, 16);
 
         VeicoloNoleggiabile VN = a4r.scegliVeicoloNoleggio(1);
-         System.out.println(VN);
+        System.out.println(VN);
          
         Noleggio N =  a4r.getRicevutaNoleggio();
         System.out.println(N);
-   
+ 
+        // N.calcolaDurata(dataInizio, dataFine);
         
-        
-       // N.calcolaDurata(dataInizio, dataFine);
-        
-       VN.setNoleggio(N);
-       VN.getNoleggio().setDurataNoleggio(30);
+        VN.setNoleggio(N);
+        VN.getNoleggio().setDurataNoleggio(30);
         
         System.out.println("VN.getPrezzoGiornaliero()" + VN.getPrezzoGiornaliero());
         System.out.println("VN.getNoleggio()" + VN.getNoleggio());
         System.out.println("VN.getInNoleggio()" + VN.getInNoleggio());
-       System.out.println("VN.getConcessionario()" + VN.getConcessionario());
-       System.out.println("VN.getConcessionario()" + VN.getConcessionario().getScontoConcessionario());
+        System.out.println("VN.getConcessionario()" + VN.getConcessionario());
+        System.out.println("VN.getConcessionario()" + VN.getConcessionario().getScontoConcessionario());
        
         a4r.scegliPagamento(1);
-       System.out.println("a4r.getMetodoPagamentoAdapter()" + a4r.getMetodoPagamentoAdapter());
+        System.out.println("a4r.getMetodoPagamentoAdapter()" + a4r.getMetodoPagamentoAdapter());
         
-         System.out.println(" PREZZO FINALE" + VN.getNoleggio().getPrezzoFinale());
+        System.out.println(" PREZZO FINALE" + VN.getNoleggio().getPrezzoFinale());
         
         a4r.effettuaPagamentoNoleggio( VN.getNoleggio().getPrezzoFinale());
         
@@ -210,7 +205,6 @@ public class A4RIT {
         a4r.effettuaPagamentoNoleggio(-1);
         //controllo se i noleggi  sono rimasti 2, e quindi l'ultimo (errato) non  è stato inserito
         assertEquals(2, a4r.getOrdiniErogati().size());
-       System.out.println("\n");
+        System.out.println("\n");
     }
-    
 }

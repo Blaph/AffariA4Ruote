@@ -6,20 +6,9 @@
 package a4r;
 
 import A4R.Concessionario;
-import A4R.DescrizioneOptional;
-import A4R.Foto;
-import A4R.Noleggio;
 import A4R.Veicolo;
-import A4R.VeicoloPersonalizzato;
-import java.util.ArrayList;
-import java.util.HashMap;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  *
@@ -28,22 +17,6 @@ import static org.junit.Assert.*;
 public class VeicoloIT {
     
     public VeicoloIT() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
     }
 
     /**
@@ -58,23 +31,19 @@ public class VeicoloIT {
        
        //caricamento di una descrizione optional lecita
        V.caricaDescrizioneOptional("Aria Condizionata", 1000 , "nessuno");
-       Assert.assertEquals(1, V.getMappaDO().size());
+       assertEquals(1, V.getMappaDO().size());
        
        //caricamento di una descrizione optional lecita
        V.caricaDescrizioneOptional("", 1000 , "nessuno");
        System.out.println(V.getMappaDO());
-       Assert.assertEquals(1, V.getMappaDO().size());
+       assertEquals(1, V.getMappaDO().size());
        
        //caricamento di una descrizione optional lecita
        V.caricaDescrizioneOptional("Aria Condizionata", 0 , "nessuno");
-       Assert.assertEquals(1, V.getMappaDO().size());
+       assertEquals(1, V.getMappaDO().size());
        
        //caricamento di una descrizione optional lecita
        V.caricaDescrizioneOptional("Aria Condizionata", 1000 , "");
-       Assert.assertEquals(1, V.getMappaDO().size());
-       
+       assertEquals(1, V.getMappaDO().size());
     }
-    
-
-    
 }

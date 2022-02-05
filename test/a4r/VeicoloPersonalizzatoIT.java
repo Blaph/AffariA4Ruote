@@ -10,9 +10,9 @@ import A4R.Foto;
 import A4R.Veicolo;
 import A4R.VeicoloPersonalizzato;
 import A4R.DescrizioneOptional;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+
 /**
  *
  * @author phili
@@ -120,6 +120,4 @@ public class VeicoloPersonalizzatoIT {
         System.out.println("veicolo che NON possiede delle descrizioni Optinal");
         VP2.mostraDescrizioniOptional();
     }
-
-  
 }

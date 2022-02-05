@@ -7,23 +7,13 @@ package a4r;
 
 import A4R.Acquisto;
 import A4R.Concessionario;
-import A4R.DescrizioneOptional;
-import A4R.Foto;
-import A4R.MetodoPagamento;
 import A4R.MetodoPagamentoAdapter;
 import A4R.Utente;
 import A4R.Veicolo;
 import A4R.VeicoloPersonalizzato;
-import java.time.LocalDate;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
-import static org.junit.jupiter.api.Assertions.assertSame;
+import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+
 /**
  *
  * @author phili
@@ -46,22 +36,21 @@ public class AcquistoIT {
         //scegli luogo eistente
         Acquisto A = new Acquisto(U, VP);
         A.scegliLuogoRitiro("Catania");
-        Assert.assertEquals(0,A.getTasseDogane(), 0.1);
-        Assert.assertEquals(0,A.getCostoSpedizione(), 0.1);
+        assertEquals(0,A.getTasseDogane(), 0.1);
+        assertEquals(0,A.getCostoSpedizione(), 0.1);
 
       
         //scegli luogo eistente
         Acquisto A1 = new Acquisto(U, VP);
         A1.scegliLuogoRitiro("London");
-        Assert.assertEquals(150,A1.getTasseDogane(), 0.1);
-        Assert.assertEquals(500,A1.getCostoSpedizione(), 0.1);
+        assertEquals(150,A1.getTasseDogane(), 0.1);
+        assertEquals(500,A1.getCostoSpedizione(), 0.1);
         
         //scegli luogo NON eistente
         Acquisto A2 = new Acquisto(U, VP);
         A2.scegliLuogoRitiro("Roma");
-        Assert.assertEquals(30,A2.getTasseDogane(), 0.1);
-        Assert.assertEquals(50,A2.getCostoSpedizione(), 0.1);
-         
+        assertEquals(30,A2.getTasseDogane(), 0.1);
+        assertEquals(50,A2.getCostoSpedizione(), 0.1);
     }
     
     
@@ -81,13 +70,6 @@ public class AcquistoIT {
         //Controllo calcolo totale dell'acquisto
         float prezzo = 1700 + ((1700*22)/100) + 0 + 3 + 10 + 0 - ((1700*0)/100) - ((1700*0)/100) - ((1700*0)/100);
         float totale = A.calcoloTotaleAcquisto( A.getPrezzoBase(), A.getIva(), A.getTasseDogane(), A.getCommissioneA4R(), A.getCommissionePagamento(), A.getCostoSpedizione(), A.getScontoPremium(), A.getScontoA4R(), A.getScontoConcessionario(), A.getPrezzoOptional());
-        Assert.assertEquals(prezzo,totale, 0.1);
-        
-    }
-    
-
-    
-    
-    
-    
+        assertEquals(prezzo,totale, 0.1);
+    } 
 }

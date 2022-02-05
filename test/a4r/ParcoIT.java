@@ -8,24 +8,12 @@ package a4r;
 import A4R.Concessionario;
 import A4R.DescrizioneOptional;
 import A4R.Foto;
-import A4R.Noleggio;
 import A4R.Parco;
 import A4R.Veicolo;
 import A4R.VeicoloNoleggiabile;
 import A4R.VeicoloPersonalizzato;
-import java.util.HashMap;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.Assert.*;
-
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-
 
 //import static org.junit.Assert.*;
 
@@ -37,25 +25,6 @@ public class ParcoIT {
     
     public ParcoIT() {
     }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-        
-    }
-    
-    @After
-    public void tearDown() {
-    }
-
-
 
     /**
      * Test of filtraVeicoliAcquisto method, of class Parco.
@@ -151,7 +120,7 @@ public class ParcoIT {
         //controllo gli optional
         assertEquals(2, VP1.getListaOptional().size());
         // controllo che nella mappa di Veicoli Personalizzati ci sia VP1
-        Assert.assertEquals(VP1, P.getMappaVeicoliPersonalizzati().get(1));
+        assertEquals(VP1, P.getMappaVeicoliPersonalizzati().get(1));
         //controllo che la mappa abbia un solo elemento
         assertEquals(1, P.getMappaVeicoliPersonalizzati().size());
         
@@ -208,9 +177,5 @@ public class ParcoIT {
         P.filtraVeicoliNoleggio("Tesla", "ModelX", "Automobile");  
         
         System.out.println("\n");
-    }
-   
-    
-    
-    
+    }  
 }

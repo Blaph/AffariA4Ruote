@@ -6,25 +6,14 @@
 package a4r;
 
 import A4R.Concessionario;
-import A4R.DescrizioneOptional;
-import A4R.Foto;
-import A4R.MetodoPagamento;
 import A4R.MetodoPagamentoAdapter;
 import A4R.Noleggio;
 import A4R.Utente;
 import A4R.Veicolo;
 import A4R.VeicoloNoleggiabile;
 import A4R.VeicoloPersonalizzato;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  *
@@ -55,7 +44,6 @@ public class NoleggioIT {
         //Controllo calcolo totale del noleggio
         float prezzo = ((100 * 60) + ((1700 * 22) / 100) + 3 + 10 - ((1700 * 0) / 100) - ((1700 * 0) / 100) - ((1700 * 0) / 100));
         //controllo del prezzo finale
-        Assert.assertEquals(prezzo,N.getPrezzoFinale(), 0.1);
-        
+        assertEquals(prezzo,N.getPrezzoFinale(), 0.1);
     }
 }
