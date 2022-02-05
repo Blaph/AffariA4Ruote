@@ -51,31 +51,30 @@ public class VeicoloIT {
      */
     
     @Test
-    public void Veicolo(){
-       Concessionario C =  new Concessionario(1, "VirAuto", "Catania", 0);
-       Veicolo V = new Veicolo(1, C, 1000, "FIAT", "Panda", 1000, "Automobile");
-       Assert.assertEquals("FIAT", V.getProduttore());
+    public void testCaricaDescrizioneOptional(){
+       System.out.println("---------------- testCaricaDescrizioneOptional -----------------");
+       Concessionario C = new Concessionario(1, "VirAuto", "Catania", 0);
+       Veicolo V = new Veicolo(1, C, 1000, "FIAT", "Panda", 1000, "Automobile"); 
+       
+       //caricamento di una descrizione optional lecita
+       V.caricaDescrizioneOptional("Aria Condizionata", 1000 , "nessuno");
+       Assert.assertEquals(1, V.getMappaDO().size());
+       
+       //caricamento di una descrizione optional lecita
+       V.caricaDescrizioneOptional("", 1000 , "nessuno");
+       System.out.println(V.getMappaDO());
+       Assert.assertEquals(1, V.getMappaDO().size());
+       
+       //caricamento di una descrizione optional lecita
+       V.caricaDescrizioneOptional("Aria Condizionata", 0 , "nessuno");
+       Assert.assertEquals(1, V.getMappaDO().size());
+       
+       //caricamento di una descrizione optional lecita
+       V.caricaDescrizioneOptional("Aria Condizionata", 1000 , "");
+       Assert.assertEquals(1, V.getMappaDO().size());
        
     }
     
-    @Test
-    public void testVeicoloPersonalizzato(){
-        Concessionario C =  new Concessionario(1, "VirAuto", "Catania", 0);
-        Veicolo V =  new Veicolo(1, C, 1000, "FIAT", "Panda", 1000, "Automobile");
-        VeicoloPersonalizzato VP = V.creaVeicoloPersonalizzato();
-        Assert.assertNull(VP.getCodice());
-    }
-    
-    @Test
-    public void testFotoVeicolo(){
-        Concessionario C =  new Concessionario(1, "VirAuto", "Catania", 0);
-        Veicolo V =  new Veicolo(1, C, 1000, "FIAT", "Panda", 1000, "Automobile");
-         Foto f1 = new Foto("Avanti");
-        V.getListaFoto().add(f1);
-        Assert.assertEquals(1,V.getListaFoto().size());
 
-        
-    }
-   
     
 }
