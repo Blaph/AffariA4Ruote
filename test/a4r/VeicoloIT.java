@@ -9,6 +9,7 @@ import A4R.Concessionario;
 import A4R.Veicolo;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.DisplayName;
 
 /**
  *
@@ -24,6 +25,7 @@ public class VeicoloIT {
      */
     
     @Test
+    @DisplayName("Test per caricare le descrizioni degli optional")
     public void testCaricaDescrizioneOptional(){
        System.out.println("---------------- testCaricaDescrizioneOptional -----------------");
        Concessionario C = new Concessionario(1, "VirAuto", "Catania", 0);
@@ -33,16 +35,12 @@ public class VeicoloIT {
        V.caricaDescrizioneOptional("Aria Condizionata", 1000 , "nessuno");
        assertEquals(1, V.getMappaDO().size());
        
-       //caricamento di una descrizione optional lecita
+       //caricamento di una descrizione optional NON lecita
        V.caricaDescrizioneOptional("", 1000 , "nessuno");
        System.out.println(V.getMappaDO());
        assertEquals(1, V.getMappaDO().size());
        
-       //caricamento di una descrizione optional lecita
-       V.caricaDescrizioneOptional("Aria Condizionata", 0 , "nessuno");
-       assertEquals(1, V.getMappaDO().size());
-       
-       //caricamento di una descrizione optional lecita
+       //caricamento di una descrizione optional NON lecita
        V.caricaDescrizioneOptional("Aria Condizionata", 1000 , "");
        assertEquals(1, V.getMappaDO().size());
     }

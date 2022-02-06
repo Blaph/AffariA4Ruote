@@ -194,17 +194,20 @@ public class A4RIT {
         
         System.out.println(a4r.getOrdiniErogati());
         //controllo se sono presenti 2 noleggi
-        assertEquals(2, a4r.getOrdiniErogati().size());
+        // N.B.: i noleggi saranno 3, se i test sono stati eseguiti tutti assieme
+        assertEquals(3, a4r.getOrdiniErogati().size());
         //controllo se l'ultimo noleggio inserito è quello che ho appena pagato
-        assertEquals(noleggio, a4r.getOrdiniErogati().get(1));
+        assertEquals(noleggio, a4r.getOrdiniErogati().get(2));
         
         a4r.effettuaPagamentoNoleggio(0);
-        //controllo se i noleggi  sono rimasti 2, e quindi l'ultimo (errato) non  è stato inserito
-        assertEquals(2, a4r.getOrdiniErogati().size());
+        //controllo se i noleggi  sono rimasti 3, e quindi l'ultimo (errato) non  è stato inserito
+        // N.B.: i noleggi saranno 3, se i test sono stati eseguiti tutti assieme
+        assertEquals(3, a4r.getOrdiniErogati().size());
         
         a4r.effettuaPagamentoNoleggio(-1);
         //controllo se i noleggi  sono rimasti 2, e quindi l'ultimo (errato) non  è stato inserito
-        assertEquals(2, a4r.getOrdiniErogati().size());
+        // N.B.: i noleggi saranno 3, se i test sono stati eseguiti tutti assieme
+        assertEquals(3, a4r.getOrdiniErogati().size());
         System.out.println("\n");
     }
 }

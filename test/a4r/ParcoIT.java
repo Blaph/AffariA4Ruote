@@ -14,6 +14,7 @@ import A4R.VeicoloNoleggiabile;
 import A4R.VeicoloPersonalizzato;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.DisplayName;
 
 //import static org.junit.Assert.*;
 
@@ -33,6 +34,7 @@ public class ParcoIT {
 
     
     @Test 
+    @DisplayName("Test di caricamento del veicolo")
     public void testCaricaMezzo() {
         System.out.println("-------------- testCaricaMezzo ----------------");
         Parco P = Parco.getInstance();
@@ -46,13 +48,15 @@ public class ParcoIT {
         System.out.println("P.getMappaVeicoli()  " + P.getMappaVeicoli());
 
         //vengono inseriti 2 veicoli correttamente
-        assertEquals( 2,P.getMappaVeicoli().size());
+        assertEquals(2, P.getMappaVeicoli().size());
         
-        //creo un veicolo con il conessionario nullo
-       P.caricaMezzo(null, 1000, "ModelX", "ModelX", 1300, "Automobile");
-       P.caricaMezzo(virauto, 0, "ModelX", "ModelX", 1300, "Automobile");
-       P.caricaMezzo(mucarauto, 1000, "", "ModelX", 1300, "Automobile");
-       P.caricaMezzo(mucarauto, 1000, "ModelX", "ModelX", 0, "Automobile");
+        //Creo veicoli che dovrebbero essere impossibili da caricare per mancanza di paramentri
+        P.caricaMezzo(null, 1000, "ModelX", "ModelX", 1300, "Automobile");
+        P.caricaMezzo(virauto, 0, "ModelX", "ModelX", 1300, "Automobile");
+        P.caricaMezzo(mucarauto, 1000, "", "ModelX", 1300, "Automobile");
+        P.caricaMezzo(mucarauto, 1000, "ModelX", "", 1300, "Automobile");
+        P.caricaMezzo(mucarauto, 1000, "ModelX", "ModelX", 0, "Automobile");
+        P.caricaMezzo(mucarauto, 1000, "ModelX", "ModelX", 1300, "");
        
        assertEquals(2,P.getMappaVeicoli().size());
        
@@ -61,25 +65,23 @@ public class ParcoIT {
     
     
     
- @Test 
+    @Test
+    @DisplayName("Test per filtrare i veicoli - Acquisto")
     public void testFiltraVeicoliAcquisto() {
         System.out.println("------------- testFiltraVeicoliAcquisto -----------------");
-        Parco P = Parco.getInstance();
-        
-        Concessionario mucarauto = new Concessionario(1, "Mu.Car.Auto", "Aci San Filippo", 0);
-        Concessionario virauto = new Concessionario(2, "Virauto", "Catania", 10);
-        
+        Parco P = Parco.getInstance(); 
 
-        //veicolo esistente
+        //veicolo esistente -> stampa il veicolo
         P.filtraVeicoliAcquisto("FIAT", "Panda", "Automobile");
         
-        //veicolo NON esistente
+        //veicolo NON esistente -> non stampa niente
         P.filtraVeicoliAcquisto("Tesla", "ModelX", "Automobile");  
         
         System.out.println("\n");
     }
     
-     @Test 
+    @Test 
+    @DisplayName("Test per concludere la personalizzazione di un veicolo")
     public void testTerminaPersonalizzazione() {
         System.out.println("------------- testTerminaPersonalizzazione ---------------");
         Parco P = Parco.getInstance();
@@ -121,20 +123,20 @@ public class ParcoIT {
         assertEquals(2, VP1.getListaOptional().size());
         // controllo che nella mappa di Veicoli Personalizzati ci sia VP1
         assertEquals(VP1, P.getMappaVeicoliPersonalizzati().get(1));
-        //controllo che la mappa abbia un solo elemento
+        //controllo che la mappa di veicoli personalizzati abbia un solo elemento
         assertEquals(1, P.getMappaVeicoliPersonalizzati().size());
         
         
         P.terminaPersonalizzazione(VP2);
-        //controllo che la mappa abbia ci siano 2 elementi
+        //controllo che nella mappa ci siano 2 elementi
         assertEquals(2, P.getMappaVeicoliPersonalizzati().size());
-        
         
         System.out.println("\n");
     }
     
     
-     @Test 
+    @Test
+    @DisplayName("Test per filtrare la lista di veicoli - Noleggio")
     public void testFiltraVeicoliNoleggio() {
         System.out.println("------------- testFiltraVeicoliNoleggio -----------------");
         Parco P = Parco.getInstance();
@@ -170,10 +172,10 @@ public class ParcoIT {
 
         P.getMappaVeicoliNoleggiabili().put(VN.getCodice(),VN);
 
-        //veicolo esistente
+        //veicolo esistente -> lo mostra
         P.filtraVeicoliNoleggio("FIAT", "Panda", "Automobile");
         
-        //veicolo NON esistente
+        //veicolo NON esistente -> non mostra nulla
         P.filtraVeicoliNoleggio("Tesla", "ModelX", "Automobile");  
         
         System.out.println("\n");
