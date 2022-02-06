@@ -51,7 +51,7 @@ public class Veicolo {
 
     public DescrizioneOptional caricaDescrizioneOptional(String nomeDO, int prezzoDO, String coloreDO){
         try {
-            if( !nomeDO.equals("") && prezzoDO>0 && !coloreDO.equals("")){
+            if(!nomeDO.equals("") && prezzoDO >= 0 && !coloreDO.equals("")){
                 descrizioneOptional = new DescrizioneOptional(nomeDO, prezzoDO, coloreDO);
                 mappaDO.put(nomeDO, descrizioneOptional);
             }else{

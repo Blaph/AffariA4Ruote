@@ -39,7 +39,10 @@ public class Noleggio extends Ordine {
 
     public float calcoloTotaleNoleggio(int prezzoGiornaliero, int durataNoleggio, int IVA, int commissioneA4R, float commissionePagamento, int scontoPremium, int scontoA4R, int scontoConcessionario) {
         prezzoBase = veicoloNoleggiabile.getPrezzoBase();
-        return ((prezzoGiornaliero * durataNoleggio) + ((prezzoBase * IVA) / 100) + commissioneA4R + commissionePagamento - ((prezzoBase * scontoPremium) / 100) - ((prezzoBase * scontoA4R) / 100) - ((prezzoBase * scontoConcessionario) / 100));
+        if (prezzoBase != 0) {
+            return ((prezzoGiornaliero * durataNoleggio) + ((prezzoBase * IVA) / 100) + commissioneA4R + commissionePagamento - ((prezzoBase * scontoPremium) / 100) - ((prezzoBase * scontoA4R) / 100) - ((prezzoBase * scontoConcessionario) / 100));
+        }
+        return 0;
     }
 
     @Override
