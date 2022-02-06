@@ -28,7 +28,7 @@ public class AcquistoIT {
     @Test
     @DisplayName("Test per scegliere il luogo di ritiro dell'acquisto")
     public void testScegliLuogoRitiro(){
-        System.out.println("testScegliLuogoRitiro");
+        System.out.println("------------------ testScegliLuogoRitiro ------------------");
         Utente U = new Utente(1, "Riccardo", "Castorina", "Via Zafferana Milo", 0, false);
         Concessionario C = new Concessionario(1, "VirAuto", "Catania", 0);
         Veicolo V = new Veicolo(1, C, 1000, "FIAT", "Panda", 1000, "Automobile"); 
@@ -65,7 +65,7 @@ public class AcquistoIT {
     @Test
     @DisplayName("Test per calcolare il prezzo finale - Acqusito")
     public void testCalcoloTotaleAcquisto(){    
-        System.out.println("testCostoFinale");
+        System.out.println("------------------ testCostoFinale ------------------");
         Utente U = new Utente(1, "Riccardo", "Castorina", "Via Zafferana Milo", 0, false);
         Concessionario C = new Concessionario(1, "VirAuto", "Catania", 0);
         Veicolo V = new Veicolo(1, C, 1000, "FIAT", "Panda", 1000, "Automobile"); 

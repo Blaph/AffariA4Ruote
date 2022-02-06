@@ -29,7 +29,7 @@ public class NoleggioIT {
     @Test
     @DisplayName("Test per calcolare il costo finale - Noleggio")
     public void testCalcoloTotaleNoleggio(){    
-        System.out.println("testCostoFinale");
+        System.out.println("------------------ testCostoFinale ------------------");
         Utente U = new Utente(1, "Riccardo", "Castorina", "Via Zafferana Milo", 0, false);
         Concessionario C = new Concessionario(1, "VirAuto", "Catania", 0);
         Veicolo V = new Veicolo(1, C, 1000, "FIAT", "Panda", 1000, "Automobile"); 

@@ -14,7 +14,7 @@ import A4R.VeicoloPersonalizzato;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
+//import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 
 /**
@@ -24,23 +24,30 @@ import org.junit.jupiter.api.DisplayName;
 public class A4RIT {
     
     public A4RIT() {
-    }
-
-    
-    @BeforeAll
-    public static void beforeEachTest(){
-        //con startup vengono creati 10 veicoli base 
         A4R a4r = A4R.getInstance();
         Parco p = Parco.getInstance();
         a4r.startup(p);
     }
+
+    
+    
+    @BeforeAll
+    public static void beforeEachTest(){
+        //con startup vengono creati 10 veicoli base 
+        //A4R a4r = A4R.getInstance();
+        //Parco p = Parco.getInstance();
+        //a4r.startup(p);
+    }
+    
     
     @Test
     @DisplayName("Test su scegli veicolo - Acquisto")
     public void testScegliVeicoloAcquisto() {
         A4R a4r = A4R.getInstance();
         Parco p = Parco.getInstance();
-        System.out.println("testScegliVeicoloAcquisto");
+        System.out.println("------------------ testScegliVeicoloAcquisto ------------------");
+        
+        System.out.println("mappa veicoli --->" + p.getMappaVeicoli() );
 
        //scegli Veicolo per l'acquisto con il codice corretto (da 1 a 26)
         VeicoloPersonalizzato VP1 = a4r.scegliVeicoloAcquisto(1);
@@ -68,8 +75,8 @@ public class A4RIT {
     @DisplayName("Test su scegli pagamento")
     public void testScegliPagamento() {
         A4R a4r = A4R.getInstance();
-        Parco p = Parco.getInstance();
-        System.out.println("testScegliPagamento");
+       // Parco p = Parco.getInstance();
+        System.out.println("------------------ testScegliPagamento ------------------");
 
         a4r.scegliVeicoloAcquisto(1);
         
@@ -96,27 +103,31 @@ public class A4RIT {
     @DisplayName("Test su effettua pagamento - Acquisto")
     public void testEffettuaPagamentoAcquisto() {
         A4R a4r = A4R.getInstance();
-        Parco p = Parco.getInstance();
-        System.out.println("testEffettuaPagamentoAcquisto");
+      //  Parco p = Parco.getInstance();
+        System.out.println("------------------ testEffettuaPagamentoAcquisto ------------------");
         a4r.scegliVeicoloAcquisto(1);
         a4r.scegliPagamento(1);
+        
+        int ordiniIniziali = a4r.getOrdiniErogati().size();
        
+     //    System.out.println("mappa veicoli --->" + p.getMappaVeicoli() );
+        
         //effettuo un acquisto con un prezzo lecito
         a4r.effettuaPagamentoAcquisto(a4r.getPrezzoFinale());
         Acquisto acquisto = a4r.getRicevutaAcquisto();
 
         //controllo che l'ordine sisa stato aggiunto alla lista degli ordine erogati
-        assertEquals(2, a4r.getOrdiniErogati().size());
+        assertEquals(ordiniIniziali + 1, a4r.getOrdiniErogati().size());
         //controllo che l'acquisto che ho pagato è quello inserito per ultimo nella lista
-        assertEquals(acquisto, a4r.getOrdiniErogati().get(1));
+        assertEquals(acquisto, a4r.getOrdiniErogati().get(ordiniIniziali));
         
         //cerco di pagare un acquisto uguale a 0
         a4r.effettuaPagamentoAcquisto(0);
-        assertEquals(2, a4r.getOrdiniErogati().size());
+        assertEquals(ordiniIniziali + 1, a4r.getOrdiniErogati().size());
         
         //cerco di pagare un acquisto uguale a -1
         a4r.effettuaPagamentoAcquisto(-1);
-        assertEquals(2, a4r.getOrdiniErogati().size());
+        assertEquals(ordiniIniziali + 1, a4r.getOrdiniErogati().size());
         
        System.out.println("\n");
     }
@@ -127,7 +138,9 @@ public class A4RIT {
     public void testScegliVeicoloNoleggio() {
         A4R a4r = A4R.getInstance();
         Parco p = Parco.getInstance();
-        System.out.println("testScegliVeicoloNoleggio");
+        System.out.println("------------------ testScegliVeicoloNoleggio ------------------");
+        
+         System.out.println("mappa veicoli --->" + p.getMappaVeicoli() );
         
         System.out.println("VEICOLI NOLEGGIABILI:   --->" + p.getMappaVeicoliNoleggiabili());
         
@@ -158,8 +171,10 @@ public class A4RIT {
     @DisplayName("Test su effettua pagamento - Noleggio")
     public void testEffettuaPagamentoNoleggio() {
         A4R a4r = A4R.getInstance();
-        Parco p = Parco.getInstance();
-        System.out.println("testEffettuaPagamentoNoleggio");
+    //    Parco p = Parco.getInstance();
+        System.out.println("------------------ testEffettuaPagamentoNoleggio ------------------");
+        
+        int ordiniIniziali = a4r.getOrdiniErogati().size();
 
         // VN.setPrezzoGiornaliero(100);
         // LocalDate dataInizio =  LocalDate.of(2023, 3, 12);
@@ -175,17 +190,8 @@ public class A4RIT {
         
         VN.setNoleggio(N);
         VN.getNoleggio().setDurataNoleggio(30);
-        
-        System.out.println("VN.getPrezzoGiornaliero()" + VN.getPrezzoGiornaliero());
-        System.out.println("VN.getNoleggio()" + VN.getNoleggio());
-        System.out.println("VN.getInNoleggio()" + VN.getInNoleggio());
-        System.out.println("VN.getConcessionario()" + VN.getConcessionario());
-        System.out.println("VN.getConcessionario()" + VN.getConcessionario().getScontoConcessionario());
        
         a4r.scegliPagamento(1);
-        System.out.println("a4r.getMetodoPagamentoAdapter()" + a4r.getMetodoPagamentoAdapter());
-        
-        System.out.println(" PREZZO FINALE" + VN.getNoleggio().getPrezzoFinale());
         
         a4r.effettuaPagamentoNoleggio( VN.getNoleggio().getPrezzoFinale());
         
@@ -193,21 +199,21 @@ public class A4RIT {
         System.out.println(noleggio);
         
         System.out.println(a4r.getOrdiniErogati());
+       
         //controllo se sono presenti 2 noleggi
-        // N.B.: i noleggi saranno 3, se i test sono stati eseguiti tutti assieme
-        assertEquals(3, a4r.getOrdiniErogati().size());
+        assertEquals(ordiniIniziali + 1, a4r.getOrdiniErogati().size());
         //controllo se l'ultimo noleggio inserito è quello che ho appena pagato
-        assertEquals(noleggio, a4r.getOrdiniErogati().get(2));
+        assertEquals(noleggio, a4r.getOrdiniErogati().get(ordiniIniziali));
         
         a4r.effettuaPagamentoNoleggio(0);
+        
         //controllo se i noleggi  sono rimasti 3, e quindi l'ultimo (errato) non  è stato inserito
-        // N.B.: i noleggi saranno 3, se i test sono stati eseguiti tutti assieme
-        assertEquals(3, a4r.getOrdiniErogati().size());
+        assertEquals(ordiniIniziali + 1, a4r.getOrdiniErogati().size());
         
         a4r.effettuaPagamentoNoleggio(-1);
+       
         //controllo se i noleggi  sono rimasti 2, e quindi l'ultimo (errato) non  è stato inserito
-        // N.B.: i noleggi saranno 3, se i test sono stati eseguiti tutti assieme
-        assertEquals(3, a4r.getOrdiniErogati().size());
+        assertEquals(ordiniIniziali + 1, a4r.getOrdiniErogati().size());
         System.out.println("\n");
     }
 }
