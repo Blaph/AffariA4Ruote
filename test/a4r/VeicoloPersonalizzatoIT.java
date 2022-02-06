@@ -12,6 +12,7 @@ import A4R.VeicoloPersonalizzato;
 import A4R.DescrizioneOptional;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.DisplayName;
 
 /**
  *
@@ -28,6 +29,7 @@ public class VeicoloPersonalizzatoIT {
     
     
     @Test
+    @DisplayName("Test per aggiungere optional in un veicolo personalizzato")
     public void testAggiungiOptional() {
         System.out.println("testAggiungiOptional");
         Concessionario C = new Concessionario(1, "VirAuto", "Catania", 0);
@@ -80,44 +82,5 @@ public class VeicoloPersonalizzatoIT {
         //Aggiungi optional passando un null
         VP.aggiungiOptional(" ");
         assertEquals(1, VP.getListaOptional().size());
-    }
-
-    
-    @Test
-    public void testMostraDescrizioneOptional() {
-        System.out.println("testMostraDescrizioneOptional");
-        
-        Concessionario C = new Concessionario(1, "VirAuto", "Catania", 0);
-        
-        Veicolo V1 = new Veicolo(1, C, 1000, "FIAT", "Panda", 1000, "Automobile"); 
-        Veicolo V2 = new Veicolo(2, C, 5000, "Audi", "A1", 1800, "Automobile");
-        
-         // Descrizioni optional
-        DescrizioneOptional specchietti = new DescrizioneOptional("Specchietti", 20, "Rossi");
-        DescrizioneOptional verniceGialla = new DescrizioneOptional("Vernice gialla", 50, "Giallo");
- 
-        //aggiunta Descrizioni Optional alla mappa DescrizioniOptional del veicolo
-        V1.getMappaDO().put(specchietti.getNome(), specchietti);
-        V1.getMappaDO().put(verniceGialla.getNome(), verniceGialla);
- 
-        // Foto
-        Foto f1 = new Foto("Avanti");
-        Foto f2 = new Foto("Dietro");
-
-        // Inserimento foto --> Veicoli
-        V1.getListaFoto().add(f1);
-        V1.getListaFoto().add(f2);
-        
-       
-       VeicoloPersonalizzato VP2 = new VeicoloPersonalizzato(4, C, 1700, "FIAT", "Panda", 1200, "Autoveicolo", V2.getMappaDO(), V2.getListaFoto());
-       VeicoloPersonalizzato VP1 = V1.creaVeicoloPersonalizzato();
-       
-        //veicolo che possiede delle descrizioni Optinal
-        System.out.println("veicolo che possiede delle descrizioni Optinal");
-        VP1.mostraDescrizioniOptional();
-        
-        //veicolo che NON possiede delle descrizioni Optinal
-        System.out.println("veicolo che NON possiede delle descrizioni Optinal");
-        VP2.mostraDescrizioniOptional();
     }
 }

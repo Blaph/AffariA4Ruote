@@ -39,6 +39,8 @@ public class ParcoIT {
         System.out.println("-------------- testCaricaMezzo ----------------");
         Parco P = Parco.getInstance();
         
+        int sizeIniziale =  P.getMappaVeicoli().size();
+        
         Concessionario mucarauto = new Concessionario(1, "Mu.Car.Auto", "Aci San Filippo", 0);
         Concessionario virauto = new Concessionario(2, "Virauto", "Catania", 10);
         
@@ -48,7 +50,7 @@ public class ParcoIT {
         System.out.println("P.getMappaVeicoli()  " + P.getMappaVeicoli());
 
         //vengono inseriti 2 veicoli correttamente
-        assertEquals(2, P.getMappaVeicoli().size());
+        assertEquals(sizeIniziale+2, P.getMappaVeicoli().size());
         
         //Creo veicoli che dovrebbero essere impossibili da caricare per mancanza di paramentri
         P.caricaMezzo(null, 1000, "ModelX", "ModelX", 1300, "Automobile");
@@ -58,7 +60,7 @@ public class ParcoIT {
         P.caricaMezzo(mucarauto, 1000, "ModelX", "ModelX", 0, "Automobile");
         P.caricaMezzo(mucarauto, 1000, "ModelX", "ModelX", 1300, "");
        
-       assertEquals(2,P.getMappaVeicoli().size());
+       assertEquals(sizeIniziale+2,P.getMappaVeicoli().size());
        
        System.out.println("\n");
     }
@@ -141,8 +143,10 @@ public class ParcoIT {
         System.out.println("------------- testFiltraVeicoliNoleggio -----------------");
         Parco P = Parco.getInstance();
         
+        
         Concessionario C = new Concessionario(1, "Mu.Car.Auto", "Aci San Filippo", 0); 
         P.caricaMezzo(C, 1000, "FIAT", "Panda", 1000, "Automobile");
+        
         
         Veicolo V = P.getVeicolo();
         
